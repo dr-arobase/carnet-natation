@@ -1,0 +1,146 @@
+
+/* Composants réutilisables — consolidation des règles */
+.navbar {
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+}
+.navbar-menu {
+    justify-content: center;
+}
+.navbar-item {
+    padding: 1rem 1.5rem;
+}
+
+.title, .subtitle {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.box {
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.input {
+    height: 2.3rem;
+}
+
+.section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 75vh;
+}
+
+/* For natation page we prefer normal document flow (no vertical centering) */
+.natation-section {
+    display: block;
+    min-height: auto;
+    padding-top: 1.5rem;
+    padding-bottom: 2.5rem;
+}
+
+/* Tables et tableaux */
+#clients-table th,
+#clients-table td {
+    padding: 0.7rem;
+}
+
+#clients-table tbody tr:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+#client-pagination .button {
+    margin: 0 0.2rem;
+}
+
+.notification {
+    border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+    #clients-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.dashboard-table {
+    margin-top: 30px;
+}
+.client-retard {
+  margin: 4px 0;
+}
+.dashboard-stats {
+    margin-bottom: 2rem;
+}
+.dashboard-stats th, .dashboard-stats td {
+    text-align: center;
+}
+
+/* Visual polish for Natation / Sauvetage pages */
+
+
+
+.section .container {
+    max-width: 1100px;
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(35,78,120,0.08);
+}
+
+/* Natation specific */
+.hero.is-primary {
+    background: linear-gradient(135deg,#00b894 0%, #0984e3 100%);
+    color: #fff;
+    padding: 2rem 1rem;
+    border-radius: 10px;
+}
+
+.table-container .table {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(10,10,10,0.04);
+}
+
+.level .button {
+    margin-right: 0.5rem;
+}
+
+.card .card-content { padding: 1.25rem 1.5rem; }
+
+.form-row { display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem; }
+.form-row .input, .form-row select { flex:1; }
+
+.section .subtitle { margin-bottom: 1rem; }
+
+.card .card-content p.title {
+    color: #0a3d62;
+}
+
+.navbar.is-light {
+    background: linear-gradient(90deg,#ffffff,#f8fbff);
+    border-bottom: 1px solid rgba(10,10,10,0.04);
+}
+
+.button.is-light {
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+.sauvetage-overview, .horaires-grid {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+}
+
+@media (max-width: 900px) {
+    .sauvetage-overview, .horaires-grid {
+        flex-direction: column;
+    }
+}
+
+/* make hidden class consistent */
+.hidden { display: none !important; }

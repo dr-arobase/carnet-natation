@@ -1,0 +1,9 @@
+cd backend
+npm install audit 
+npm install knex sqlite3
+npm install express
+npm install bcryptjs 
+npm install jsonwebtoken
+npm install path
+npm install express-session
+node server.js

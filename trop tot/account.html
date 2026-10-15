@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestion de Compte</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <nav class="menu" id="menu">
+        <h2>👤 Menu Compte</h2>
+        <ul>
+            <li><a href="#profil" onclick="toggleProfil(); return false;">👨‍🏫 Profil utilisateur</a></li>
+            <li><a href="#motdepasse" onclick="toggleMotDePasse(); return false;">🔒 Changer mot de passe</a></li>
+            <li><a href="#creerCompte" onclick="toggleCreerCompte(); return false;">🧑‍💼 Créer compte moniteur/admin</a></li>
+            <li><a href="#journalConnexion" onclick="toggleJournalConnexion(); return false;">🧾 Voir journal de connexion</a></li>
+            <li><a href="#importerEleves" onclick="toggleImporterEleves(); return false;">📥 Importer liste d'élèves</a></li>
+            <li><a href="#modeSuperviseur" onclick="toggleModeSuperviseur(); return false;">👀 Mode superviseur</a></li>
+            <li><a href="#parametres" onclick="toggleParametres(); return false;">🛠️ Paramètres personnalisés</a></li>
+            <li><a href="index.html">🏠 Accueil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>👤 Gestion de Compte Utilisateur</h1>
+        <p>Gérez votre profil, sécurité et préférences personnelles.</p>
+        
+        <div class="account-overview">
+            <div class="user-card">
+                <div class="user-avatar">👨‍🏫</div>
+                <div class="user-info">
+                    <h3>Marie Dubois</h3>
+                    <p>Monitrice Senior</p>
+                    <p>Dernière connexion: 31/10/2024 - 14:23</p>
+                </div>
+                <div class="user-status">
+                    <span class="status-active">🟢 En ligne</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- contenu compte... (inchangé) -->
+    </main>
+    <script src="assets/js/nageurs.js"></script>
+</body>
+</html>

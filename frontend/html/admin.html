@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carnet de Natation — Admin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+        <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+
+            <div id="menu" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="index.html">Dashboard</a>
+                    <a class="navbar-item" href="admin.html" aria-current="page">Admin</a>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-light" href="login.html">Déconnexion</a>
+                        </div>
+                    </div>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Tableau de bord administrateur</h1>
+            <h2 class="subtitle">Bienvenue, administrateur. Ici vous pouvez gérer les utilisateurs et les paramètres.</h2>
+
+            <div class="box">
+
+                <form id="client-form">
+                    <input type="hidden" id="client-id">
+
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="Nom-d'utilisateur">Nom d'utilisateur :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="Nom-d'utilisateur" name="Nom-d'utilisateur" placeholder="Ex : Arobase">
+                                    <span class="icon is-left"><i class="fas fa-user"></i></span>
+                                </div>
+                                <div class="help is-danger" id="Nom-d'utilisateur-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="Mot-de-passe">Mot de passe :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="Mot-de-passe" name="Mot-de-passe" placeholder="Ex : mc+hirl">
+                                    <span class="icon is-left"><i class="fas fa-user-lock"></i></span>
+                                </div>
+                                <div class="help is-danger" id="Mot-de-passe-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="Role">Role :</label>
+                        <div class="control has-icons-left">
+                            <div class="select is-fullwidth">
+                            <select id="Role" name="Role" placeholder="Ex : user">
+                                <option value="">Sélectionner</option>
+                                <option value="user">utilisateur</option>
+                                <option value="admin">administrateur</option>
+                            </select> 
+                            </div>
+                            <span class="icon is-left"><i class="fas fa-user-shield"></i></span>
+                        </div>
+                        <div class="help is-danger" id="Role-error" style="display:none;"></div>
+                    </div>
+                        
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary" type="submit" id="submit-btn">
+                                Ajouter l'utilisateur
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-danger" type="button" id="cancel-edit">
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="notification is-success" id="success-message" style="display: none;">
+                    Utilisateur ajouté avec succès !
+                </div>
+                <div class="notification is-danger" id="error-message" style="display: none;">
+                    Une erreur est survenue. Veuillez réessayer.
+                </div>
+            </div>
+
+            <br>
+
+            <h2 class="subtitle">Liste des utilisateurs déjà enregistrés</h2>
+
+            <div class="box">
+                <div class="field has-addons">
+                    <div class="control is-expanded has-icons-left">
+                        <input id="search-utilisateur" class="input" type="text" placeholder="Rechercher par nom ou autre...">
+                        <span class="icon is-left"><i class="fas fa-search"></i></span>
+                    </div>
+                    <div class="control">
+                        <button class="button is-danger" id="clear-search">Effacer</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <table class="table is-fullwidth is-striped" id="clients-table">
+                    <thead>
+                        <tr>
+                            <th class="sort-link" data-column="Nom-d'utilisateur">
+                                Nom utilisateur <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="mot_de_passe">
+                                Mot de passe <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="Role">
+                                role <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="created_at">
+                                Créé le <span class="sort-icon"></span>
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <nav class="pagination is-centered">
+                  <div id="utilisateur-pagination" class="buttons is-centered"></div>
+                </nav>
+            </div>
+
+        </div>
+    </section>
+
+      <p><a href="index.html">Retour à l'accueil</a></p>
+
+    <script src="/js/admin.js"></script>
+    <script src="/js/gestutilisateurs.js"></script>
+</body>
+</html>

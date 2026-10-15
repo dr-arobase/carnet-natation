@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carnet de Natation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <meta name="description" content="Gestion des cours de natation et sauvetage" />
+</head>
+<body>
+        <nav class="navbar is-white" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="index.html">
+                        <strong>Carnet de Natation</strong>
+                    </a>
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-end" id="nav-auth">
+                            <div id="auth-actions" class="navbar-item">
+                                <div class="buttons">
+                                    <a class="button is-light" href="login.html">Connexion</a>
+                                    <a class="button is-primary" href="register.html">Inscription</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <section class="hero is-medium is-primary is-bold">
+                <div class="hero-body">
+                    <div class="container has-text-centered">
+                        <div id="hero-avatar" style="display:inline-block;margin-bottom:0.75rem;">
+                            <div id="avatar-circle" style="width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:32px;color:#fff;margin:0 auto;">?</div>
+                        </div>
+                        <h1 id="greeting" class="title">Bienvenue</h1>
+                        <h2 id="welcome-text" class="subtitle">Gestion des cours, des moniteurs et des nageurs.</h2>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="columns is-vcentered is-centered">
+                        <div class="column is-5">
+                            <div class="card">
+                                <div class="card-content">
+                                    <p class="title">Natation</p>
+                                    <p class="content">Accédez aux plannings, aux nageurs et aux séances.</p>
+                                        <a id="btn-natation" class="button is-info">Aller à Natation</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-5">
+                            <div class="card">
+                                <div class="card-content">
+                                    <p class="title">Sauvetage</p>
+                                    <p class="content">Gérez les formations et les exercices de sauvetage.</p>
+                                        <a id="btn-sauvetage" class="button is-danger">Aller à Sauvetage</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    <script src="/js/nageurs.js"></script>
+        <script>
+            // Enhanced greeting & navigation behavior
+            function base64UrlDecode(str) {
+                str = str.replace(/-/g, '+').replace(/_/g, '/');
+                while (str.length % 4) str += '=';
+                try { return decodeURIComponent(escape(window.atob(str))); } catch(e) { return null; }
+            }
+            function getUsernameFromToken() {
+                try {
+                    const t = localStorage.getItem('token');
+                    if (!t) return null;
+                    const parts = t.split('.');
+                    if (parts.length < 2) return null;
+                    const payload = base64UrlDecode(parts[1]);
+                    if (!payload) return null;
+                    const obj = JSON.parse(payload);
+                    return obj.username || obj.user || obj.name || null;
+                } catch (e) { return null; }
+            }
+            function getCookie(name) {
+                const v = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+                return v ? decodeURIComponent(v.pop()) : null;
+            }
+
+            function setAvatarInitial(name) {
+                const circle = document.getElementById('avatar-circle');
+                if (!circle) return;
+                const initial = name ? name.trim()[0].toUpperCase() : '?';
+                circle.textContent = initial;
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                // navbar burger
+                const burger = document.querySelector('.navbar-burger');
+                const menu = document.getElementById('navMenu');
+                burger?.addEventListener('click', () => { burger.classList.toggle('is-active'); menu.classList.toggle('is-active'); });
+
+                const username = getUsernameFromToken() || getCookie('username');
+                const greeting = document.getElementById('greeting');
+                const welcome = document.getElementById('welcome-text');
+                const btnNat = document.getElementById('btn-natation');
+                const btnSau = document.getElementById('btn-sauvetage');
+                const authActions = document.getElementById('auth-actions');
+
+                function deleteCookie(name) {
+                    document.cookie = name + '=; Max-Age=0; path=/';
+                }
+
+                function renderAuthActions(loggedInUsername) {
+                    if (!authActions) return;
+                    if (loggedInUsername) {
+                        authActions.innerHTML = `
+                            <div class="navbar-item">
+                                <div>Bonjour <strong>${loggedInUsername}</strong></div>
+                            </div>
+                            <div class="navbar-item">
+                                <div class="buttons">
+                                    <button id="logout-btn" class="button is-light">Déconnexion</button>
+                                </div>
+                            </div>`;
+                        const logoutBtn = document.getElementById('logout-btn');
+                        logoutBtn?.addEventListener('click', () => {
+                            localStorage.removeItem('token');
+                            deleteCookie('username');
+                            window.location.href = 'login.html';
+                        });
+                    } else {
+                        authActions.innerHTML = `
+                            <div class="buttons">
+                                <a class="button is-light" href="login.html">Connexion</a>
+                                <a class="button is-primary" href="register.html">Inscription</a>
+                            </div>`;
+                    }
+                }
+
+                if (username) {
+                    if (greeting) greeting.textContent = `Bonjour ${username}`;
+                    if (welcome) welcome.textContent = 'Choisissez une des options ci‑dessous :';
+                    setAvatarInitial(username);
+                    // navigation
+                    if (btnNat) btnNat.setAttribute('href','natation.html');
+                    if (btnSau) btnSau.setAttribute('href','sauvetage.html');
+                    renderAuthActions(username);
+                } else {
+                    if (greeting) greeting.textContent = 'Bienvenue';
+                    if (welcome) welcome.textContent = 'Veuillez vous connecter pour voir vos options.';
+                    setAvatarInitial(null);
+                    if (btnNat) btnNat.setAttribute('href','login.html');
+                    if (btnSau) btnSau.setAttribute('href','login.html');
+                    renderAuthActions(null);
+                }
+            });
+        </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cours de Natation</title>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+</head>
+<body>
+    <nav class="menu" id="menu">
+        <h2>Menu natation</h2>
+        <ul>
+            <li><a href="#liste" onclick="toggleListe(); return false;">📋 Liste des nageurs</a></li>
+            <li><a href="#ajouter" onclick="toggleAjouter(); return false;">➕ Ajouter un nageur</a></li>
+            <li><a href="#modifier" onclick="toggleModifier(); return false;">✏️ Modifier les informations</a></li>
+            <li><a href="#supprimer" onclick="toggleSupprimer(); return false;">🗑️ Supprimer un nageur</a></li>
+            <li><a href="#horaires" onclick="toggleHoraires(); return false;">🕓 Voir horaire du groupe</a></li>
+            <li><a href="#presence" onclick="togglePresence(); return false;">📌 Marquer la présence</a></li>
+            <li><a href="#evaluer" onclick="toggleEvaluer(); return false;">📝 Évaluer les compétences</a></li>
+            <li><a href="#attribuer" onclick="toggleAttribuer(); return false;">🎖️ Attribuer un niveau ou diplôme</a></li>
+            <li><a href="#exporter" onclick="toggleExporter(); return false;">📤 Exporter groupe en PDF / CSV</a></li>
+            <li><a href="#progression" onclick="toggleProgression(); return false;">📈 Voir progression par élève</a></li>
+            <li><a href="#historique" onclick="toggleHistorique(); return false;">📚 Accès aux historiques</a></li>
+            <li><a href="#moniteur" onclick="toggleMoniteur(); return false;">🧑‍🏫 Assignation de moniteur</a></li>
+            <li><a href="#filtrer" onclick="toggleFiltrer(); return false;">🗂️ Filtrer par jour, heure, niveau</a></li>
+            <li><a href="#deconnexion">🚪 Déconnexion</a></li>
+            <li><a href="index.html">🏠 Accueil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        
+        <h1>Cours de Natation</h1>
+        <p>Bienvenue dans la section dédiée aux cours de natation.</p>
+        <h2>Nos programmes</h2>
+        <ul>
+            <li><strong>Débutants :</strong> Apprentissage des bases de la natation, familiarisation avec l'eau.</li>
+            <li><strong>Intermédiaires :</strong> Techniques de nage, endurance et amélioration du style.</li>
+            <li><strong>Avancés :</strong> Perfectionnement, entraînements intensifs et préparation aux compétitions.</li>
+        </ul>
+        <h2>Horaires</h2>
+        <p>Les cours sont disponibles du lundi au vendredi de 9h à 18h.</p>
+        <h2>Inscriptions</h2>
+        <p>Contactez-nous via la page <a href="#contact">Contact</a> pour vous inscrire.</p>
+
+        <!-- contenu natation... (inchangé) -->
+    </main>
+    <script src="assets/js/nageurs.js"></script>
+</body>
+</html>

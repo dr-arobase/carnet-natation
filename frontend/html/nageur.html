@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des nageurs</title>
+    <link rel="icon" type="image/png" href="https://bulma.io/images/bulma-logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+        <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+
+            <div id="menu" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="">yokoso</a>
+                    <a class="navbar-item" href="">mais non</a>
+                    <a class="navbar-item" href="">acceuil</a>
+                    <a class="navbar-item" href="" aria-current="page">nageurs</a>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-light" href="login.html">Déconnexion</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+    <section class="section">
+        <div class="container"> 
+
+            <h1 class="title">Gestion des nageurs dans les cours de natation</h1>
+            <h2 class="subtitle">Ajouter un nouveau nageur</h2>
+            <div class="box">
+                <form id="nageur-form">
+                    <input type="hidden" id="nageur-id">
+
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="nom">Nom :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="nom" name="nom" placeholder="Ex : Tremblay">
+                                    <span class="icon is-left"><i class="fas fa-user"></i></span>
+                                </div>
+                                <div class="help is-danger" id="nom-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="prenom">Prénom :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="prenom" name="prenom" placeholder="Ex : Samuel">
+                                    <span class="icon is-left"><i class="fas fa-user"></i></span>
+                                </div>
+                                <div class="help is-danger" id="prenom-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="niveau">Niveau :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="niveau" name="niveau" placeholder="Ex : Nageur 3">
+                                    <span class="icon is-left"><i class="fas fa-user-graduate"></i></span>
+                                </div>
+                                <div class="help is-danger" id="niveau-error" style="display:none;"></div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="horaire">Horaire :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="horaire" name="horaire" placeholder="Ex : Lundi 10h-11h">
+                                    <span class="icon is-left"><i class="fas fa-clock"></i></span>
+                                </div>
+                                <div class="help is-danger" id="horaire-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="notes">notes (optionnel) :</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" id="notes" name="notes" placeholder="Ex : Allergique au chlore">
+                            <span class="icon is-left"><i class="fas fa-map-marker-alt"></i></span>
+                        </div>
+                        <div class="help is-danger" id="notes-error" style="display:none;"></div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary" type="submit" id="submit-btn">
+                                Ajouter le nageur
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-danger" type="button" id="cancel-edit">
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="notification is-success" id="success-message" style="display: none;">
+                    nageur ajouté avec succès !
+                </div>
+                <div class="notification is-danger" id="error-message" style="display: none;">
+                    Une erreur est survenue. Veuillez réessayer.
+                </div>
+            </div>
+
+            <br>
+
+            <h2 class="subtitle">Liste des nageurs déjà enregistrés</h2>
+
+            <div class="box">
+                <div class="field has-addons">
+                    <div class="control is-expanded has-icons-left">
+                        <input id="search-nageur" class="input" type="text" placeholder="Rechercher par nom, prénom, niveau ou horaire...">
+                        <span class="icon is-left"><i class="fas fa-search"></i></span>
+                    </div>
+                    <div class="control">
+                        <button class="button is-danger" id="clear-search">Effacer</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <table class="table is-fullwidth is-striped" id="nageurs-table">
+                    <thead>
+                        <tr>
+                            <th class="sort-link" data-column="nom">
+                                Nom complet <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="niveau">
+                                Niveau <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="horaire">
+                                Horaire <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="notes">
+                                Notes <span class="sort-icon"></span>
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <nav class="pagination is-centered">
+                  <div id="nageur-pagination" class="buttons is-centered"></div>
+                </nav>
+            </div>
+
+        </div>
+    </section>
+        <script src="nageur.js"></script>
+</body>
+</html>

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Outils Avancés</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="menu" id="menu">
+        <h2>🧪 Outils Avancés</h2>
+        <ul>
+            <li><a href="#rechercheAvancee" onclick="toggleRechercheAvancee(); return false;">🔎 Recherche avancée</a></li>
+            <li><a href="#tempsSession" onclick="toggleTempsSession(); return false;">⏳ Temps restant session</a></li>
+            <li><a href="#rappelsAlertes" onclick="toggleRappelsAlertes(); return false;">🔔 Rappels et alertes</a></li>
+            <li><a href="#certificats" onclick="toggleCertificats(); return false;">🎫 Générer certificats</a></li>
+            <li><a href="#photosProfil" onclick="togglePhotosProfil(); return false;">📸 Photos de profil</a></li>
+            <li><a href="#planCours" onclick="togglePlanCours(); return false;">🧭 Mode plan de cours</a></li>
+            <li><a href="index.html">🏠 Accueil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>🧪 Outils Avancés</h1>
+        <p>Fonctionnalités avancées pour optimiser la gestion des cours.</p>
+        
+        <div class="tools-overview">
+            <div class="tool-card">
+                <div class="tool-icon">🔎</div>
+                <h3>Recherche Multi-critères</h3>
+                <p>Recherche puissante par nom, date, groupe, niveau</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">⏳</div>
+                <h3>Gestion du Temps</h3>
+                <p>Suivi du temps restant avant fin de session</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🔔</div>
+                <h3>Système d'Alertes</h3>
+                <p>Rappels automatiques et notifications</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🎫</div>
+                <h3>Certificats</h3>
+                <p>Génération automatique de certificats</p>
+            </div>
+        </div>
+
+        <section id="rechercheAvancee" class="hidden">
+            <h2>🔎 Recherche avancée</h2>
+            <div class="advanced-search">
+                <form class="search-form">
+                    <div class="search-section">
+                        <h3>Critères de recherche</h3>
+                        
+                        <label for="searchType">Type de recherche :</label>
+                        <select id="searchType" onchange="updateSearchFields()">
+                            <option value="participants">Participants</option>
+                            <option value="cours">Cours</option>
+                            <option value="evaluations">Évaluations</option>
+                            <option value="presences">Présences</option>
+                        </select>
+                        
+                        <label for="searchTerm">Terme de recherche :</label>
+                        <input type="text" id="searchTerm" placeholder="Nom, prénom, ou mot-clé...">
+                        
+                        <label for="dateDebut">Période - Du :</label>
+                        <input type="date" id="dateDebut">
+                        
+                        <label for="dateFin">Au :</label>
+                        <input type="date" id="dateFin">
+                    </div>
+                    
+                    <div class="search-section">
+                        <h3>Filtres avancés</h3>
+                        
+                        <label for="niveauRecherche">Niveau :</label>
+                        <select id="niveauRecherche" multiple>
+                            <option value="prescolaire1">Préscolaire 1</option>
+                            <option value="prescolaire2">Préscolaire 2</option>
+                            <option value="nageur1">Nageur 1</option>
+                            <option value="nageur2">Nageur 2</option>
+                            <option value="adulte">Adulte</option>
+                        </select>
+                        
+                        <label for="moniteurRecherche">Moniteur :</label>
+                        <select id="moniteurRecherche">
+                            <option value="">Tous les moniteurs</option>
+                            <option value="marie">Marie Dubois</option>
+                            <option value="pierre">Pierre Leblanc</option>
+                            <option value="sophie">Sophie Martin</option>
+                        </select>
+                        
+                        <label for="statutRecherche">Statut :</label>
+                        <select id="statutRecherche">
+                            <option value="">Tous les statuts</option>
+                            <option value="actif">Actif</option>
+                            <option value="inactif">Inactif</option>
+                            <option value="termine">Terminé</option>
+                            <option value="suspendu">Suspendu</option>
+                        </select>
+                    </div>
+                    
+                    <div class="search-section">
+                        <h3>Options de recherche</h3>
+                        
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="searchExact"> Recherche exacte</label>
+                            <label><input type="checkbox" id="searchCaseSensitive"> Respecter la casse</label>
+                            <label><input type="checkbox" id="includeArchived"> Inclure les archives</label>
+                        </div>
+                        
+                        <label for="sortOrder">Trier par :</label>
+                        <select id="sortOrder">
+                            <option value="nom">Nom (A-Z)</option>
+                            <option value="date">Date (récent en premier)</option>
+                            <option value="niveau">Niveau</option>
+                            <option value="moniteur">Moniteur</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">🔍 Lancer la recherche</button>
+                    <button type="button" onclick="resetSearch()" class="btn-secondary">🔄 Réinitialiser</button>
+                </form>
+                
+                <div class="search-results" id="searchResults">
+                    <h3>Résultats de recherche</h3>
+                    <div class="results-summary">
+                        <p>0 résultat trouvé</p>
+                    </div>
+                    <div class="results-list">
+                        <!-- Les résultats apparaîtront ici -->
+                    </div>
+                </div>
+                
+                <div class="saved-searches">
+                    <h3>Recherches sauvegardées</h3>
+                    <div class="saved-search-item">
+                        <span>Nageurs Préscolaire 1 - Octobre 2024</span>
+                        <button onclick="loadSavedSearch('pres1_oct')" class="btn-secondary">Charger</button>
+                        <button onclick="deleteSavedSearch('pres1_oct')" class="btn-danger">Supprimer</button>
+                    </div>
+                    <button onclick="saveCurrentSearch()" class="btn-outline">💾 Sauvegarder cette recherche</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="tempsSession" class="hidden">
+            <h2>⏳ Gestion du temps de session</h2>
+            <div class="session-timer">
+                <div class="timer-display">
+                    <h3>Session en cours</h3>
+                    <div class="current-session">
+                        <strong>Préscolaire 2 - Lundi 14h00</strong>
+                        <p>Moniteur: Marie Dubois</p>
+                    </div>
+                    
+                    <div class="time-remaining">
+                        <div class="timer-circle">
+                            <canvas id="timerCanvas" width="200" height="200"></canvas>
+                            <div class="timer-text">
+                                <span class="time-number">23:45</span>
+                                <span class="time-label">minutes restantes</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="session-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%"></div>
+                        </div>
+                        <p>Session complétée à 65%</p>
+                    </div>
+                </div>
+                
+                <div class="session-controls">
+                    <h3>Contrôles de session</h3>
+                    <div class="control-buttons">
+                        <button onclick="pauseSession()" class="btn-warning">⏸️ Pause</button>
+                        <button onclick="resumeSession()" class="btn-success">▶️ Reprendre</button>
+                        <button onclick="extendSession()" class="btn-secondary">⏰ Prolonger (+15min)</button>
+                        <button onclick="endSession()" class="btn-danger">⏹️ Terminer</button>
+                    </div>
+                    
+                    <div class="session-notes">
+                        <label for="sessionNotes">Notes de session :</label>
+                        <textarea id="sessionNotes" rows="3" placeholder="Notes sur le déroulement de la session..."></textarea>
+                        <button onclick="saveSessionNotes()" class="btn-outline">💾 Sauvegarder notes</button>
+                    </div>
+                </div>
+                
+                <div class="session-history">
+                    <h3>Historique des sessions</h3>
+                    <table class="session-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Groupe</th>
+                                <th>Durée prévue</th>
+                                <th>Durée réelle</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>28/10/2024</td>
+                                <td>Préscolaire 2</td>
+                                <td>45 min</td>
+                                <td>47 min</td>
+                                <td class="status-completed">✅ Terminée</td>
+                            </tr>
+                            <tr>
+                                <td>25/10/2024</td>
+                                <td>Nageur 1</td>
+                                <td>60 min</td>
+                                <td>55 min</td>
+                                <td class="status-completed">✅ Terminée</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="rappelsAlertes" class="hidden">
+            <h2>🔔 Système de rappels et alertes</h2>
+            <div class="alerts-system">
+                <div class="alerts-overview">
+                    <h3>Alertes actives</h3>
+                    <div class="alert-item urgent">
+                        <div class="alert-icon">🚨</div>
+                        <div class="alert-content">
+                            <strong>Absence répétée</strong>
+                            <p>Emma Tremblay - 3 absences consécutives</p>
+                            <span class="alert-time">Il y a 2h</span>
+                        </div>
+                        <div class="alert-actions">
+                            <button onclick="resolveAlert('absence-emma')" class="btn-success">Résoudre</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-item warning">
+                        <div class="alert-icon">⚠️</div>
+                        <div class="alert-content">
+                            <strong>Évaluation en retard</strong>
+                            <p>Groupe Nageur 2 - Évaluation prévue il y a 1 semaine</p>
+                            <span class="alert-time">Il y a 1 jour</span>
+                        </div>
+                        <div class="alert-actions">
+                            <button onclick="scheduleEvaluation('nageur2')" class="btn-primary">Planifier</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert-configuration">
+                    <h3>Configuration des alertes</h3>
+                    <form class="alert-config-form">
+                        <div class="alert-type">
+                            <h4>Alertes d'absence</h4>
+                            <label>
+                                <input type="checkbox" checked> 
+                                Alerter après <input type="number" value="3" min="1" max="10"> absences consécutives
+                            </label>
+                            <label>
+                                <input type="checkbox"> 
+                                Alerter si le taux d'assiduité est inférieur à <input type="number" value="75" min="50" max="95"> %
+                            </label>
+                        </div>
+                        
+                        <div class="alert-type">
+                            <h4>Alertes d'évaluation</h4>
+                            <label>
+                                <input type="checkbox" checked> 
+                                Rappel d'évaluation après <input type="number" value="4" min="1" max="12"> semaines
+                            </label>
+                            <label>
+                                <input type="checkbox"> 
+                                Alerte si aucune progression en <input type="number" value="8" min="4" max="20"> semaines
+                            </label>
+                        </div>
+                        
+                        <div class="alert-type">
+                            <h4>Alertes système</h4>
+                            <label>
+                                <input type="checkbox" checked> 
+                                Alerte de sauvegarde (si pas de sauvegarde depuis <input type="number" value="24" min="6" max="72"> heures)
+                            </label>
+                            <label>
+                                <input type="checkbox"> 
+                                Alerte de capacité (si groupe à plus de <input type="number" value="90" min="70" max="100">% de capacité)
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Sauvegarder la configuration</button>
+                    </form>
+                </div>
+                
+                <div class="notification-preferences">
+                    <h3>Préférences de notification</h3>
+                    <div class="notification-methods">
+                        <h4>Méthodes de notification :</h4>
+                        <label><input type="checkbox" checked> Dans l'application</label>
+                        <label><input type="checkbox"> Par email</label>
+                        <label><input type="checkbox"> SMS (pour alertes urgentes)</label>
+                    </div>
+                    
+                    <div class="notification-schedule">
+                        <h4>Horaires de notification :</h4>
+                        <label>Début : <input type="time" value="08:00"></label>
+                        <label>Fin : <input type="time" value="18:00"></label>
+                        <label><input type="checkbox"> Notifications le week-end</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certificats" class="hidden">
+            <h2>🎫 Génération de certificats</h2>
+            <div class="certificate-generator">
+                <div class="certificate-types">
+                    <h3>Types de certificats disponibles</h3>
+                    <div class="certificate-grid">
+                        <div class="certificate-type">
+                            <h4>🏊‍♂️ Certificat de niveau</h4>
+                            <p>Pour les nageurs ayant réussi un niveau</p>
+                            <button onclick="showCertificateForm('niveau')" class="btn-primary">Générer</button>
+                        </div>
+                        
+                        <div class="certificate-type">
+                            <h4>🛟 Certificat de sauvetage</h4>
+                            <p>Bronze, Argent, Or</p>
+                            <button onclick="showCertificateForm('sauvetage')" class="btn-primary">Générer</button>
+                        </div>
+                        
+                        <div class="certificate-type">
+                            <h4>📜 Certificat de participation</h4>
+                            <p>Pour la participation à une session</p>
+                            <button onclick="showCertificateForm('participation')" class="btn-primary">Générer</button>
+                        </div>
+                        
+                        <div class="certificate-type">
+                            <h4>🏆 Certificat de mérite</h4>
+                            <p>Reconnaissance spéciale</p>
+                            <button onclick="showCertificateForm('merite')" class="btn-primary">Générer</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="certificateForm" class="certificate-form hidden">
+                    <h3>Génération de certificat</h3>
+                    <form>
+                        <label for="certificateParticipant">Participant :</label>
+                        <select id="certificateParticipant" required>
+                            <option value="">-- Sélectionner un participant --</option>
+                            <option value="emma">Emma Tremblay</option>
+                            <option value="lucas">Lucas Dupont</option>
+                            <option value="sophie">Sophie Martin</option>
+                        </select>
+                        
+                        <label for="certificateLevel">Niveau/Type :</label>
+                        <select id="certificateLevel" required>
+                            <!-- Options générées dynamiquement selon le type -->
+                        </select>
+                        
+                        <label for="certificateDate">Date d'obtention :</label>
+                        <input type="date" id="certificateDate" required>
+                        
+                        <label for="certificateInstructor">Moniteur/Instructeur :</label>
+                        <select id="certificateInstructor">
+                            <option value="marie">Marie Dubois</option>
+                            <option value="pierre">Pierre Leblanc</option>
+                            <option value="sophie">Sophie Martin</option>
+                        </select>
+                        
+                        <label for="certificateNotes">Notes spéciales :</label>
+                        <textarea id="certificateNotes" rows="2" placeholder="Mention particulière, félicitations..."></textarea>
+                        
+                        <div class="certificate-preview">
+                            <h4>Aperçu du certificat :</h4>
+                            <div class="preview-container">
+                                <canvas id="certificatePreview" width="400" height="300"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="certificate-actions">
+                            <button type="submit" class="btn-primary">🎫 Générer le certificat</button>
+                            <button type="button" onclick="printCertificate()" class="btn-secondary">🖨️ Imprimer</button>
+                            <button type="button" onclick="emailCertificate()" class="btn-outline">📧 Envoyer par email</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="certificate-history">
+                    <h3>Certificats récemment générés</h3>
+                    <table class="certificate-table">
+                        <thead>
+                            <tr>
+                                <th>Participant</th>
+                                <th>Type</th>
+                                <th>Niveau/Distinction</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Emma Tremblay</td>
+                                <td>Niveau</td>
+                                <td>Préscolaire 2</td>
+                                <td>25/10/2024</td>
+                                <td>
+                                    <button onclick="viewCertificate('emma-pres2')" class="btn-sm">👁️</button>
+                                    <button onclick="printCertificate('emma-pres2')" class="btn-sm">🖨️</button>
+                                    <button onclick="emailCertificate('emma-pres2')" class="btn-sm">📧</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="photosProfil" class="hidden">
+            <h2>📸 Gestion des photos de profil</h2>
+            <div class="photo-management">
+                <div class="photo-upload-section">
+                    <h3>Ajouter/Modifier des photos</h3>
+                    
+                    <div class="participant-search">
+                        <label for="photoParticipant">Rechercher un participant :</label>
+                        <input type="text" id="photoParticipant" placeholder="Taper le nom..." onkeyup="searchParticipants()">
+                        
+                        <div class="search-results" id="participantResults"></div>
+                    </div>
+                    
+                    <div class="photo-upload-area" id="photoUploadArea" style="display: none;">
+                        <h4>Photo pour : <span id="selectedParticipant"></span></h4>
+                        
+                        <div class="current-photo">
+                            <img id="currentPhoto" src="placeholder-avatar.png" alt="Photo actuelle">
+                            <p>Photo actuelle</p>
+                        </div>
+                        
+                        <div class="upload-controls">
+                            <input type="file" id="photoFile" accept="image/*" onchange="previewPhoto()">
+                            <button onclick="document.getElementById('photoFile').click()" class="btn-secondary">📁 Choisir une photo</button>
+                            
+                            <div class="photo-options">
+                                <label><input type="checkbox" checked> Redimensionner automatiquement</label>
+                                <label><input type="checkbox"> Recadrer en carré</label>
+                            </div>
+                        </div>
+                        
+                        <div class="photo-preview" id="photoPreview" style="display: none;">
+                            <h5>Aperçu :</h5>
+                            <img id="previewImage" alt="Aperçu">
+                            <div class="preview-actions">
+                                <button onclick="savePhoto()" class="btn-primary">💾 Sauvegarder</button>
+                                <button onclick="cancelPhoto()" class="btn-secondary">❌ Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="batch-photo-section">
+                    <h3>Import en lot</h3>
+                    <p>Importez plusieurs photos à la fois. Les noms des fichiers doivent correspondre aux noms des participants.</p>
+                    
+                    <div class="batch-upload-area">
+                        <input type="file" id="batchPhotos" multiple accept="image/*" onchange="processBatchPhotos()">
+                        <button onclick="document.getElementById('batchPhotos').click()" class="btn-outline">📁 Sélectionner plusieurs photos</button>
+                    </div>
+                    
+                    <div class="batch-preview" id="batchPreview" style="display: none;">
+                        <h4>Photos à importer :</h4>
+                        <div class="batch-photos-grid" id="batchPhotosGrid"></div>
+                        <button onclick="importBatchPhotos()" class="btn-primary">📸 Importer toutes les photos</button>
+                    </div>
+                </div>
+                
+                <div class="photo-gallery-section">
+                    <h3>Galerie des photos</h3>
+                    
+                    <div class="gallery-filters">
+                        <select id="galleryGroup">
+                            <option value="">Tous les groupes</option>
+                            <option value="prescolaire">Préscolaires</option>
+                            <option value="nageurs">Nageurs</option>
+                            <option value="adultes">Adultes</option>
+                        </select>
+                        
+                        <select id="photoStatus">
+                            <option value="">Tous</option>
+                            <option value="with-photo">Avec photo</option>
+                            <option value="without-photo">Sans photo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="photo-gallery" id="photoGallery">
+                        <div class="photo-item">
+                            <img src="placeholder-avatar.png" alt="Emma Tremblay">
+                            <div class="photo-info">
+                                <h5>Emma Tremblay</h5>
+                                <p>Préscolaire 2</p>
+                                <div class="photo-actions">
+                                    <button onclick="editPhoto('emma')" class="btn-sm">✏️</button>
+                                    <button onclick="deletePhoto('emma')" class="btn-sm btn-danger">🗑️</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Plus d'éléments de galerie... -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="planCours" class="hidden">
+            <h2>🧭 Mode plan de cours (checklist de compétences)</h2>
+            <div class="lesson-plan">
+                <div class="plan-header">
+                    <h3>Plan de cours actuel</h3>
+                    <div class="plan-info">
+                        <strong>Groupe :</strong> Préscolaire 2 - Lundi 14h<br>
+                        <strong>Date :</strong> 31/10/2024<br>
+                        <strong>Moniteur :</strong> Marie Dubois
+                    </div>
+                </div>
+                
+                <div class="lesson-objectives">
+                    <h3>Objectifs de la séance</h3>
+                    <div class="objective-item">
+                        <input type="checkbox" id="obj1">
+                        <label for="obj1">Flottaison ventrale assistée (5 secondes)</label>
+                        <div class="objective-notes">
+                            <textarea placeholder="Notes sur l'objectif..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="objective-item">
+                        <input type="checkbox" id="obj2">
+                        <label for="obj2">Immersion complète de la tête</label>
+                        <div class="objective-notes">
+                            <textarea placeholder="Notes sur l'objectif..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="objective-item">
+                        <input type="checkbox" id="obj3">
+                        <label for="obj3">Déplacement avec aide flottante</label>
+                        <div class="objective-notes">
+                            <textarea placeholder="Notes sur l'objectif..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="competency-checklist">
+                    <h3>Checklist de compétences par participant</h3>
+                    
+                    <div class="participant-competencies">
+                        <div class="participant-header">
+                            <h4>Emma Tremblay</h4>
+                            <div class="participant-progress">Progression: 7/12 compétences</div>
+                        </div>
+                        
+                        <div class="competency-grid">
+                            <div class="competency-item completed">
+                                <input type="checkbox" checked>
+                                <span>Entrée dans l'eau</span>
+                                <div class="competency-level">✅ Acquis</div>
+                            </div>
+                            
+                            <div class="competency-item in-progress">
+                                <input type="checkbox">
+                                <span>Flottaison ventrale</span>
+                                <div class="competency-level">🔄 En cours</div>
+                            </div>
+                            
+                            <div class="competency-item">
+                                <input type="checkbox">
+                                <span>Respiration aquatique</span>
+                                <div class="competency-level">⏳ À travailler</div>
+                            </div>
+                            
+                            <div class="competency-item">
+                                <input type="checkbox">
+                                <span>Sortie autonome</span>
+                                <div class="competency-level">⏳ À travailler</div>
+                            </div>
+                        </div>
+                        
+                        <div class="participant-notes">
+                            <textarea placeholder="Notes spécifiques pour Emma..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <button onclick="addParticipant()" class="btn-outline">➕ Ajouter un participant</button>
+                </div>
+                
+                <div class="lesson-structure">
+                    <h3>Structure de la séance</h3>
+                    
+                    <div class="lesson-phase">
+                        <h4>🚿 Échauffement (5 min)</h4>
+                        <div class="phase-checklist">
+                            <label><input type="checkbox"> Accueil et présentation</label>
+                            <label><input type="checkbox"> Douche obligatoire</label>
+                            <label><input type="checkbox"> Exercices d'échauffement au bord</label>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-phase">
+                        <h4>🏊 Activités principales (30 min)</h4>
+                        <div class="phase-checklist">
+                            <label><input type="checkbox"> Entrée progressive dans l'eau</label>
+                            <label><input type="checkbox"> Jeux d'adaptation aquatique</label>
+                            <label><input type="checkbox"> Exercices de flottaison</label>
+                            <label><input type="checkbox"> Immersion du visage</label>
+                            <label><input type="checkbox"> Déplacements avec aide</label>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-phase">
+                        <h4>🎉 Retour au calme (10 min)</h4>
+                        <div class="phase-checklist">
+                            <label><input type="checkbox"> Jeu calme dans l'eau</label>
+                            <label><input type="checkbox"> Sortie de l'eau en autonomie</label>
+                            <label><input type="checkbox"> Bilan de la séance</label>
+                            <label><input type="checkbox"> Rangement du matériel</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lesson-materials">
+                    <h3>Matériel nécessaire</h3>
+                    <div class="materials-checklist">
+                        <label><input type="checkbox"> Planches (x6)</label>
+                        <label><input type="checkbox"> Frites (x8)</label>
+                        <label><input type="checkbox"> Jouets flottants (x10)</label>
+                        <label><input type="checkbox"> Tapis de sol (x2)</label>
+                        <label><input type="checkbox"> Chronomètre</label>
+                    </div>
+                </div>
+                
+                <div class="lesson-actions">
+                    <button onclick="saveLessonPlan()" class="btn-primary">💾 Sauvegarder le plan</button>
+                    <button onclick="exportLessonPlan()" class="btn-secondary">📄 Exporter en PDF</button>
+                    <button onclick="duplicateLessonPlan()" class="btn-outline">📋 Dupliquer pour prochaine séance</button>
+                </div>
+                
+                <div class="lesson-templates">
+                    <h3>Modèles de plans de cours</h3>
+                    <div class="template-list">
+                        <div class="template-item">
+                            <strong>Préscolaire 1 - Première séance</strong>
+                            <button onclick="loadTemplate('pres1-first')" class="btn-sm">Charger</button>
+                        </div>
+                        <div class="template-item">
+                            <strong>Nageur 2 - Perfectionnement brasse</strong>
+                            <button onclick="loadTemplate('nag2-brasse')" class="btn-sm">Charger</button>
+                        </div>
+                        <div class="template-item">
+                            <strong>Adulte - Apprentissage crawl</strong>
+                            <button onclick="loadTemplate('adulte-crawl')" class="btn-sm">Charger</button>
+                        </div>
+                    </div>
+                    
+                    <button onclick="createTemplate()" class="btn-outline">➕ Créer un nouveau modèle</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="nageurs.js"></script>
+</body>
+</html>

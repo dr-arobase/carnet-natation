@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accueil</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="menu">
+    <h2>🧭 Menu Principal</h2>
+    <ul>
+        <li><a href="#" onclick="return false;">🏠 Accueil</a></li>
+        <li><a href="natation.html">✅ Accéder aux groupes de natation</a></li>
+        <li><a href="sauvetage.html">🛟 Accéder aux groupes de sauvetage</a></li>
+        <li><a href="stats.html">📊 Statistiques et rapports</a></li>
+        <li><a href="account.html">👤 Gestion de compte / Connexion</a></li>
+        <li><a href="#prochainCours" onclick="toggleProchainCours()">� Prochain cours à venir</a></li>
+        <li><button id="themeToggle" onclick="toggleTheme()">🎨 Changer de thème</button></li>
+        <li>
+          🌐 Langue
+          <select id="langSwitch" onchange="changeLanguage()">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+          </select>
+        </li>
+        <li><button id="lockScreen" onclick="lockScreen()">🔒 Déconnexion / Verrouiller l'écran</button></li>
+        <li><a href="admin.html">⚙️ Administration</a></li>
+        <li><a href="outils.html">🧪 Outils avancés</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>🏊‍♂️ Bienvenue au Carnet de Natation</h1>
+    <p>Application de gestion complète des cours de natation et sauvetage.</p>
+    
+    <div class="dashboard-cards">
+      <div class="card">
+        <h3>✅ Groupes de Natation</h3>
+        <p>Gérer les nageurs, niveaux, présences et évaluations</p>
+        <a href="natation.html" class="btn">Accéder</a>
+      </div>
+      
+      <div class="card">
+        <h3>🛟 Groupes de Sauvetage</h3>
+        <p>Tests, certifications et formation au sauvetage</p>
+        <a href="sauvetage.html" class="btn">Accéder</a>
+      </div>
+      
+      <div class="card">
+        <h3>📊 Statistiques</h3>
+        <p>Rapports et analyses des performances</p>
+        <a href="stats.html" class="btn">Voir les stats</a>
+      </div>
+    </div>
+
+    <section id="prochainCours" class="hidden">
+      <h2>🕐 Prochains cours</h2>
+      <div class="cours-list">
+        <div class="cours-item">
+          <strong>Lundi 14h00 - Nageur 2</strong>
+          <span>Piscine A - Moniteur: Marie Dupont</span>
+        </div>
+        <div class="cours-item">
+          <strong>Mardi 10h00 - Préscolaire 3</strong>
+          <span>Piscine B - Moniteur: Jean Martin</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="nageurs.js"></script>
+</body>
+</html>

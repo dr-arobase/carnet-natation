@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestion de Compte</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="menu" id="menu">
+        <h2>👤 Menu Compte</h2>
+        <ul>
+            <li><a href="#profil" onclick="toggleProfil(); return false;">👨‍🏫 Profil utilisateur</a></li>
+            <li><a href="#motdepasse" onclick="toggleMotDePasse(); return false;">🔒 Changer mot de passe</a></li>
+            <li><a href="#creerCompte" onclick="toggleCreerCompte(); return false;">🧑‍💼 Créer compte moniteur/admin</a></li>
+            <li><a href="#journalConnexion" onclick="toggleJournalConnexion(); return false;">🧾 Voir journal de connexion</a></li>
+            <li><a href="#importerEleves" onclick="toggleImporterEleves(); return false;">📥 Importer liste d'élèves</a></li>
+            <li><a href="#modeSuperviseur" onclick="toggleModeSuperviseur(); return false;">👀 Mode superviseur</a></li>
+            <li><a href="#parametres" onclick="toggleParametres(); return false;">🛠️ Paramètres personnalisés</a></li>
+            <li><a href="index.html">🏠 Accueil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>👤 Gestion de Compte Utilisateur</h1>
+        <p>Gérez votre profil, sécurité et préférences personnelles.</p>
+        
+        <div class="account-overview">
+            <div class="user-card">
+                <div class="user-avatar">👨‍🏫</div>
+                <div class="user-info">
+                    <h3>Marie Dubois</h3>
+                    <p>Monitrice Senior</p>
+                    <p>Dernière connexion: 31/10/2024 - 14:23</p>
+                </div>
+                <div class="user-status">
+                    <span class="status-active">🟢 En ligne</span>
+                </div>
+            </div>
+        </div>
+
+        <section id="profil" class="hidden">
+            <h2>👨‍🏫 Profil utilisateur</h2>
+            <form class="profile-form">
+                <div class="form-section">
+                    <h3>Informations personnelles</h3>
+                    <label for="prenom">Prénom :</label>
+                    <input type="text" id="prenom" value="Marie" required>
+                    
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" value="Dubois" required>
+                    
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" value="marie.dubois@piscine.ca" required>
+                    
+                    <label for="telephone">Téléphone :</label>
+                    <input type="tel" id="telephone" value="514-123-4567">
+                </div>
+                
+                <div class="form-section">
+                    <h3>Informations professionnelles</h3>
+                    <label for="fonction">Fonction :</label>
+                    <select id="fonction">
+                        <option value="moniteur">Moniteur</option>
+                        <option value="moniteur-senior" selected>Moniteur Senior</option>
+                        <option value="coordinateur">Coordinateur</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                    
+                    <label for="specialites">Spécialités :</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" checked> Préscolaires</label>
+                        <label><input type="checkbox" checked> Nageurs débutants</label>
+                        <label><input type="checkbox"> Nageurs avancés</label>
+                        <label><input type="checkbox" checked> Sauvetage</label>
+                        <label><input type="checkbox"> Forme physique</label>
+                    </div>
+                    
+                    <label for="dateEmbauche">Date d'embauche :</label>
+                    <input type="date" id="dateEmbauche" value="2020-09-15" readonly>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Photo de profil</h3>
+                    <div class="photo-upload">
+                        <img src="placeholder-avatar.png" alt="Photo de profil" class="profile-photo">
+                        <button type="button" onclick="changerPhoto()">📸 Changer la photo</button>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary">Sauvegarder les modifications</button>
+            </form>
+        </section>
+
+        <section id="motdepasse" class="hidden">
+            <h2>🔒 Changer le mot de passe</h2>
+            <form class="password-form">
+                <div class="security-info">
+                    <h3>Sécurité du compte</h3>
+                    <p>Dernière modification du mot de passe : 15/08/2024</p>
+                    <p>Force du mot de passe actuel : <span class="password-strength strong">Fort 🟢</span></p>
+                </div>
+                
+                <label for="motDePasseActuel">Mot de passe actuel :</label>
+                <input type="password" id="motDePasseActuel" required>
+                
+                <label for="nouveauMotDePasse">Nouveau mot de passe :</label>
+                <input type="password" id="nouveauMotDePasse" required>
+                <div class="password-requirements">
+                    <p>Le mot de passe doit contenir :</p>
+                    <ul>
+                        <li id="length">Au moins 8 caractères</li>
+                        <li id="uppercase">Une lettre majuscule</li>
+                        <li id="lowercase">Une lettre minuscule</li>
+                        <li id="number">Un chiffre</li>
+                        <li id="special">Un caractère spécial</li>
+                    </ul>
+                </div>
+                
+                <label for="confirmerMotDePasse">Confirmer le nouveau mot de passe :</label>
+                <input type="password" id="confirmerMotDePasse" required>
+                
+                <div class="two-factor">
+                    <h3>Authentification à deux facteurs</h3>
+                    <label>
+                        <input type="checkbox" id="enable2FA"> 
+                        Activer l'authentification à deux facteurs (recommandé)
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-primary">Changer le mot de passe</button>
+            </form>
+        </section>
+
+        <section id="creerCompte" class="hidden">
+            <h2>🧑‍💼 Créer un compte moniteur/admin</h2>
+            <div class="access-restriction">
+                <p><strong>⚠️ Accès restreint :</strong> Cette fonction est réservée aux administrateurs.</p>
+            </div>
+            <form class="create-account-form">
+                <h3>Informations du nouveau compte</h3>
+                
+                <label for="nouveauPrenom">Prénom :</label>
+                <input type="text" id="nouveauPrenom" required>
+                
+                <label for="nouveauNom">Nom :</label>
+                <input type="text" id="nouveauNom" required>
+                
+                <label for="nouvelEmail">Email :</label>
+                <input type="email" id="nouvelEmail" required>
+                
+                <label for="nouveauTelephone">Téléphone :</label>
+                <input type="tel" id="nouveauTelephone">
+                
+                <label for="nouveauRole">Rôle :</label>
+                <select id="nouveauRole" required>
+                    <option value="">-- Sélectionner un rôle --</option>
+                    <option value="moniteur">Moniteur</option>
+                    <option value="moniteur-senior">Moniteur Senior</option>
+                    <option value="coordinateur">Coordinateur</option>
+                    <option value="admin">Administrateur</option>
+                </select>
+                
+                <label for="motDePasseTemporaire">Mot de passe temporaire :</label>
+                <input type="password" id="motDePasseTemporaire" required>
+                <small>L'utilisateur devra le changer lors de sa première connexion</small>
+                
+                <div class="permissions">
+                    <h3>Permissions</h3>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox"> Gestion des nageurs</label>
+                        <label><input type="checkbox"> Gestion du sauvetage</label>
+                        <label><input type="checkbox"> Accès aux statistiques</label>
+                        <label><input type="checkbox"> Gestion des horaires</label>
+                        <label><input type="checkbox"> Export des données</label>
+                        <label><input type="checkbox"> Administration système</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary">Créer le compte</button>
+            </form>
+        </section>
+
+        <section id="journalConnexion" class="hidden">
+            <h2>🧾 Journal de connexion</h2>
+            <div class="connection-log">
+                <h3>Historique des connexions</h3>
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>Date/Heure</th>
+                            <th>Adresse IP</th>
+                            <th>Appareil</th>
+                            <th>Statut</th>
+                            <th>Localisation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>31/10/2024 14:23</td>
+                            <td>192.168.1.100</td>
+                            <td>Windows Chrome</td>
+                            <td class="status-success">✅ Succès</td>
+                            <td>Montréal, QC</td>
+                        </tr>
+                        <tr>
+                            <td>30/10/2024 09:15</td>
+                            <td>192.168.1.100</td>
+                            <td>Windows Chrome</td>
+                            <td class="status-success">✅ Succès</td>
+                            <td>Montréal, QC</td>
+                        </tr>
+                        <tr>
+                            <td>29/10/2024 16:45</td>
+                            <td>10.0.0.50</td>
+                            <td>Android Mobile</td>
+                            <td class="status-failed">❌ Échec</td>
+                            <td>Laval, QC</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="security-alerts">
+                <h3>Alertes de sécurité</h3>
+                <div class="alert-item">
+                    <span class="alert-warning">⚠️</span>
+                    <div class="alert-content">
+                        <strong>Tentative de connexion suspecte</strong>
+                        <p>29/10/2024 - Tentative depuis un nouvel appareil bloquée</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="importerEleves" class="hidden">
+            <h2>📥 Importer une liste d'élèves</h2>
+            <div class="import-section">
+                <h3>Importer depuis un fichier</h3>
+                <div class="file-upload-area">
+                    <div class="upload-icon">📁</div>
+                    <p>Glissez votre fichier ici ou cliquez pour sélectionner</p>
+                    <input type="file" id="fileImport" accept=".csv,.xlsx,.xls">
+                    <small>Formats acceptés: CSV, Excel (.xlsx, .xls)</small>
+                </div>
+                
+                <div class="import-options">
+                    <h4>Options d'importation</h4>
+                    <label>
+                        <input type="checkbox" checked> Vérifier les doublons
+                    </label>
+                    <label>
+                        <input type="checkbox"> Créer les groupes manquants automatiquement
+                    </label>
+                    <label>
+                        <input type="checkbox" checked> Envoyer un email de confirmation aux parents
+                    </label>
+                </div>
+                
+                <button onclick="previsualiserImport()" class="btn-secondary">Prévisualiser l'import</button>
+            </div>
+            
+            <div class="template-section">
+                <h3>Modèle de fichier</h3>
+                <p>Utilisez ce modèle pour structurer vos données :</p>
+                <button onclick="telechargerModele()" class="btn-outline">📄 Télécharger le modèle CSV</button>
+                
+                <div class="format-example">
+                    <h4>Format requis :</h4>
+                    <table class="example-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Email parent</th>
+                                <th>Téléphone</th>
+                                <th>Niveau</th>
+                                <th>Groupe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tremblay</td>
+                                <td>Emma</td>
+                                <td>parent@email.com</td>
+                                <td>514-123-4567</td>
+                                <td>Préscolaire 2</td>
+                                <td>Lundi 14h</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="modeSuperviseur" class="hidden">
+            <h2>👀 Mode superviseur</h2>
+            <div class="supervisor-mode">
+                <div class="mode-toggle">
+                    <h3>Activer le mode superviseur</h3>
+                    <label class="switch">
+                        <input type="checkbox" id="supervisorMode">
+                        <span class="slider-switch"></span>
+                    </label>
+                    <p>Le mode superviseur permet de voir les activités de tous les moniteurs</p>
+                </div>
+                
+                <div id="supervisorContent" class="hidden">
+                    <h3>Vue d'ensemble des activités</h3>
+                    <div class="activity-grid">
+                        <div class="activity-card">
+                            <h4>Marie Dubois</h4>
+                            <p>En ligne - Groupe Préscolaire 2</p>
+                            <span class="activity-time">Depuis 14:00</span>
+                        </div>
+                        <div class="activity-card">
+                            <h4>Pierre Leblanc</h4>
+                            <p>En pause - Dernière activité: 13:45</p>
+                            <span class="activity-time">Il y a 30 min</span>
+                        </div>
+                        <div class="activity-card">
+                            <h4>Sophie Martin</h4>
+                            <p>En cours - Groupe Nageur 3</p>
+                            <span class="activity-time">Depuis 15:00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="supervisor-actions">
+                        <button onclick="voirTousLesGroupes()">Voir tous les groupes</button>
+                        <button onclick="genererRapportActivite()">Rapport d'activité</button>
+                        <button onclick="envoyerMessage()">Envoyer un message global</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="parametres" class="hidden">
+            <h2>🛠️ Paramètres personnalisés</h2>
+            <div class="settings-sections">
+                <div class="settings-section">
+                    <h3>🔔 Notifications</h3>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" checked> Notifications par email
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" checked> Alertes de présence
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox"> Rappels de cours
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>🎨 Apparence</h3>
+                    <div class="setting-item">
+                        <label for="themePreference">Thème préféré :</label>
+                        <select id="themePreference">
+                            <option value="auto">Automatique</option>
+                            <option value="light">Clair</option>
+                            <option value="dark">Sombre</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="fontSize">Taille de police :</label>
+                        <select id="fontSize">
+                            <option value="small">Petite</option>
+                            <option value="normal" selected>Normale</option>
+                            <option value="large">Grande</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>🌐 Préférences</h3>
+                    <div class="setting-item">
+                        <label for="defaultView">Vue par défaut :</label>
+                        <select id="defaultView">
+                            <option value="dashboard">Tableau de bord</option>
+                            <option value="natation">Natation</option>
+                            <option value="sauvetage">Sauvetage</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="autoSave">Sauvegarde automatique :</label>
+                        <select id="autoSave">
+                            <option value="1">Toutes les minutes</option>
+                            <option value="5" selected>Toutes les 5 minutes</option>
+                            <option value="10">Toutes les 10 minutes</option>
+                            <option value="0">Désactivée</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="sauvegarderParametres()" class="btn-primary">Sauvegarder les paramètres</button>
+        </section>
+    </main>
+    <script src="nageurs.js"></script>
+</body>
+</html>

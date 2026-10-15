@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Statistiques et Rapports</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="menu" id="menu">
+        <h2>📊 Menu Statistiques</h2>
+        <ul>
+            <li><a href="#progression" onclick="toggleProgressionStats(); return false;">📈 Progression des nageurs</a></li>
+            <li><a href="#assiduite" onclick="toggleAssiduite(); return false;">📉 Taux d'assiduité par groupe</a></li>
+            <li><a href="#reussite" onclick="toggleReussite(); return false;">🧮 Taux de réussite par niveau</a></li>
+            <li><a href="#historique" onclick="toggleHistoriqueStats(); return false;">🗓️ Historique de participation</a></li>
+            <li><a href="#moniteur" onclick="toggleStatsMoniteur(); return false;">👥 Statistiques par moniteur</a></li>
+            <li><a href="#export" onclick="toggleExportStats(); return false;">📂 Exportation des stats</a></li>
+            <li><a href="index.html">🏠 Accueil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>📊 Statistiques et Rapports</h1>
+        <p>Tableau de bord complet pour analyser les performances et la progression.</p>
+        
+        <div class="stats-overview">
+            <div class="stat-card">
+                <h3>👥 Total Participants</h3>
+                <div class="stat-number">247</div>
+                <div class="stat-trend">+12 ce mois</div>
+            </div>
+            <div class="stat-card">
+                <h3>📈 Taux de réussite</h3>
+                <div class="stat-number">87%</div>
+                <div class="stat-trend">+3% vs mois dernier</div>
+            </div>
+            <div class="stat-card">
+                <h3>🕐 Taux d'assiduité</h3>
+                <div class="stat-number">92%</div>
+                <div class="stat-trend">-1% vs mois dernier</div>
+            </div>
+            <div class="stat-card">
+                <h3>🎓 Diplômes attribués</h3>
+                <div class="stat-number">34</div>
+                <div class="stat-trend">+8 ce mois</div>
+            </div>
+        </div>
+
+        <section id="progression" class="hidden">
+            <h2>📈 Progression des nageurs</h2>
+            <div class="chart-filters">
+                <label for="periodeProgression">Période :</label>
+                <select id="periodeProgression">
+                    <option value="mois">Ce mois</option>
+                    <option value="trimestre">Ce trimestre</option>
+                    <option value="annee">Cette année</option>
+                </select>
+                
+                <label for="groupeProgression">Groupe :</label>
+                <select id="groupeProgression">
+                    <option value="tous">Tous les groupes</option>
+                    <option value="prescolaire">Préscolaires</option>
+                    <option value="nageurs">Nageurs</option>
+                    <option value="adultes">Adultes</option>
+                </select>
+            </div>
+            <div class="chart-container">
+                <canvas id="progressionChart" width="800" height="400"></canvas>
+            </div>
+            <div class="progression-details">
+                <h3>Détails par niveau</h3>
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Niveau</th>
+                            <th>Participants</th>
+                            <th>Progressions</th>
+                            <th>Taux</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Préscolaire 1</td>
+                            <td>23</td>
+                            <td>18</td>
+                            <td>78%</td>
+                        </tr>
+                        <tr>
+                            <td>Nageur 2</td>
+                            <td>31</td>
+                            <td>27</td>
+                            <td>87%</td>
+                        </tr>
+                        <tr>
+                            <td>Adulte Débutant</td>
+                            <td>19</td>
+                            <td>15</td>
+                            <td>79%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="assiduite" class="hidden">
+            <h2>📉 Taux d'assiduité par groupe</h2>
+            <div class="assiduite-charts">
+                <div class="chart-section">
+                    <h3>Par groupe</h3>
+                    <canvas id="assiduiteGroupeChart" width="400" height="300"></canvas>
+                </div>
+                <div class="chart-section">
+                    <h3>Tendance mensuelle</h3>
+                    <canvas id="assiduiteTendanceChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+            <div class="assiduite-details">
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Groupe</th>
+                            <th>Cours prévus</th>
+                            <th>Présences</th>
+                            <th>Absences</th>
+                            <th>Taux d'assiduité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Préscolaire 1 - Lundi 14h</td>
+                            <td>16</td>
+                            <td>147</td>
+                            <td>13</td>
+                            <td class="taux-excellent">92%</td>
+                        </tr>
+                        <tr>
+                            <td>Nageur 2 - Mercredi 16h</td>
+                            <td>16</td>
+                            <td>189</td>
+                            <td>27</td>
+                            <td class="taux-bon">87%</td>
+                        </tr>
+                        <tr>
+                            <td>Adulte - Vendredi 19h</td>
+                            <td>12</td>
+                            <td>98</td>
+                            <td>22</td>
+                            <td class="taux-moyen">82%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="reussite" class="hidden">
+            <h2>🧮 Taux de réussite par niveau</h2>
+            <div class="reussite-overview">
+                <div class="niveau-stats">
+                    <h3>Préscolaires</h3>
+                    <div class="niveau-details">
+                        <div class="niveau-item">
+                            <span>Préscolaire 1 → 2</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                                <span>85%</span>
+                            </div>
+                        </div>
+                        <div class="niveau-item">
+                            <span>Préscolaire 2 → 3</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                                <span>78%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="niveau-stats">
+                    <h3>Nageurs</h3>
+                    <div class="niveau-details">
+                        <div class="niveau-item">
+                            <span>Nageur 1 → 2</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%"></div>
+                                <span>92%</span>
+                            </div>
+                        </div>
+                        <div class="niveau-item">
+                            <span>Nageur 2 → 3</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 89%"></div>
+                                <span>89%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="historique" class="hidden">
+            <h2>🗓️ Historique de participation par session</h2>
+            <div class="historique-filters">
+                <label for="sessionHist">Session :</label>
+                <select id="sessionHist">
+                    <option value="automne2024">Automne 2024</option>
+                    <option value="ete2024">Été 2024</option>
+                    <option value="printemps2024">Printemps 2024</option>
+                </select>
+            </div>
+            <div class="historique-chart">
+                <canvas id="participationChart" width="800" height="400"></canvas>
+            </div>
+            <div class="historique-resume">
+                <h3>Résumé de la session Automne 2024</h3>
+                <ul>
+                    <li>Nombre total de participants : 247</li>
+                    <li>Nouveaux inscrits : 45</li>
+                    <li>Taux de rétention : 89%</li>
+                    <li>Cours annulés : 3 (météo)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="moniteur" class="hidden">
+            <h2>👥 Statistiques par moniteur</h2>
+            <div class="moniteur-stats">
+                <div class="moniteur-card">
+                    <h3>Marie Dubois</h3>
+                    <div class="moniteur-details">
+                        <p><strong>Groupes assignés :</strong> 3</p>
+                        <p><strong>Participants totaux :</strong> 67</p>
+                        <p><strong>Taux de réussite :</strong> 91%</p>
+                        <p><strong>Évaluation moyenne :</strong> 4.8/5</p>
+                    </div>
+                </div>
+                <div class="moniteur-card">
+                    <h3>Pierre Leblanc</h3>
+                    <div class="moniteur-details">
+                        <p><strong>Groupes assignés :</strong> 4</p>
+                        <p><strong>Participants totaux :</strong> 89</p>
+                        <p><strong>Taux de réussite :</strong> 87%</p>
+                        <p><strong>Évaluation moyenne :</strong> 4.6/5</p>
+                    </div>
+                </div>
+                <div class="moniteur-card">
+                    <h3>Sophie Martin</h3>
+                    <div class="moniteur-details">
+                        <p><strong>Groupes assignés :</strong> 2</p>
+                        <p><strong>Participants totaux :</strong> 45</p>
+                        <p><strong>Taux de réussite :</strong> 94%</p>
+                        <p><strong>Évaluation moyenne :</strong> 4.9/5</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="export" class="hidden">
+            <h2>📂 Exportation des statistiques</h2>
+            <div class="export-options">
+                <div class="export-section">
+                    <h3>Rapports prêts à exporter</h3>
+                    <div class="export-list">
+                        <div class="export-item">
+                            <span>Rapport mensuel - Octobre 2024</span>
+                            <div class="export-buttons">
+                                <button onclick="exporterRapport('mensuel-oct', 'pdf')">📄 PDF</button>
+                                <button onclick="exporterRapport('mensuel-oct', 'csv')">📊 CSV</button>
+                                <button onclick="exporterRapport('mensuel-oct', 'excel')">📈 Excel</button>
+                            </div>
+                        </div>
+                        <div class="export-item">
+                            <span>Statistiques de progression - Trimestre</span>
+                            <div class="export-buttons">
+                                <button onclick="exporterRapport('progression-trim', 'pdf')">📄 PDF</button>
+                                <button onclick="exporterRapport('progression-trim', 'csv')">📊 CSV</button>
+                            </div>
+                        </div>
+                        <div class="export-item">
+                            <span>Rapport d'assiduité par moniteur</span>
+                            <div class="export-buttons">
+                                <button onclick="exporterRapport('assiduite-moniteur', 'pdf')">📄 PDF</button>
+                                <button onclick="exporterRapport('assiduite-moniteur', 'excel')">📈 Excel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="export-section">
+                    <h3>Générer un rapport personnalisé</h3>
+                    <form class="custom-report-form">
+                        <label for="reportType">Type de rapport :</label>
+                        <select id="reportType">
+                            <option value="progression">Progression</option>
+                            <option value="assiduite">Assiduité</option>
+                            <option value="reussite">Taux de réussite</option>
+                            <option value="complet">Rapport complet</option>
+                        </select>
+                        
+                        <label for="reportPeriod">Période :</label>
+                        <select id="reportPeriod">
+                            <option value="semaine">Cette semaine</option>
+                            <option value="mois">Ce mois</option>
+                            <option value="trimestre">Ce trimestre</option>
+                            <option value="annee">Cette année</option>
+                        </select>
+                        
+                        <label for="reportFormat">Format :</label>
+                        <select id="reportFormat">
+                            <option value="pdf">PDF</option>
+                            <option value="csv">CSV</option>
+                            <option value="excel">Excel</option>
+                        </select>
+                        
+                        <button type="submit">Générer le rapport</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="nageurs.js"></script>
+</body>
+</html>

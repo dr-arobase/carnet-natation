@@ -1,0 +1,27 @@
+####################################################################
+curl -X GET http://localhost:3000/alluser
+####################################################################
+
+curl -X GET http://localhost:3000/allnageurs
+####################################################################
+curl -X POST http://localhost:3000/addNageurs \
+        -H "Content-Type: application/json" \
+        -d '{
+            "nom": "Doe",
+            "prenom": "John",
+            "niveau": "Intermédiaire",
+            "horaire": "Lundi 18h-19h",
+            "notes": "Aucun"
+        }'
+
+####################################################################
+curl -X POST 'http://localhost:3000/api/nageurs/addNageurs' \
+    -H "Content-Type: application/json" \
+    -d '{"nom":"Doe",
+    "prenom":"John",
+    "niveau":"Intermédiaire",
+    "horaire":"Lundi 18h-19h",
+    "notes":"Aucun"}'
+####################################################################
+curl -X DELETE http://localhost:3000/api/nageurs/deleteNageurs/1
+####################################################################

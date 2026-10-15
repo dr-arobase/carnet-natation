@@ -1,0 +1,268 @@
+Résumé du projet "carnet"
+
+Date : 12 février 2026
+
+1) But du projet
+- Application web (frontend + backend) pour gérer des nageurs et utilisateurs :
+   - gestion des groupes, présences, évaluations et niveaux;
+   - comptes utilisateurs (moniteurs, admin, clients) et authentification;
+   - interface pour administrer les groupes de natation et de sauvetage.
+
+2) État actuel du dépôt
+- Structure principale :
+   - `backend/` : API Node/Express, base SQLite, scripts serveur.
+   - `frontend/` : pages HTML, CSS et scripts JS pour l'interface.
+   - dossiers expérimentaux : `trop tot/`, `wtf/`.
+
+Backend (points saillants)
+- `server.js` : point d'entrée — prépare la base (appel `createTable` depuis `db.js`) puis démarre Express.
+- `app.js` : configuration d'Express (JSON, logging, sessions via `express-session`, routes et fichiers statiques).
+- `db.js` : utilise `knex` + `sqlite3` (fichier `basededonnees.sqlite3`) ; crée les tables `User` et `nageurs` si nécessaire et effectue un seed admin si absent.
+- Fichiers utiles : `inspect_routes.js`, `requette.http`, `nodemon.json`, scripts dans `scripts/`.
+- `package.json` et `package-lock.json` sont présents et `node_modules/` installé.
+
+Frontend (points saillants)
+- Pages principales : `login.html`, `register.html`, `client.html`, `admin.html`, `nageur.html`, etc.
+- Scripts côté client dans `frontend/js/` et styles dans `frontend/css/style.css`.
+
+3) Actions récentes
+- Installation : `express-session` (ajoutée), tentative d'installation de `path` (module core — inutile).
+- Audit : `npm audit` a signalé 7 vulnérabilités (1 modérée, 6 hautes).
+   - Paquets impliqués : `cacache`, `lodash`, `make-fetch-happen`, `node-gyp`, `qs`, `sqlite3`, `tar`.
+   - Recommandation : `npm audit fix` (ou `--force` pour tout corriger, mais risqué).
+
+4) Problèmes rencontrés
+- Vulnérabilités NPM : plusieurs vulnérabilités (dont des dépendances profondes). Nécessite une mise à jour planifiée et des tests.
+- Erreur au démarrage : lors de `node server.js` une erreur système liée à la lecture de fichiers est apparue :
+   Error: UNKNOWN: unknown error, read (errno -4094)
+   - Causes probables : verrouillage/gestion OneDrive (chemin avec espaces/accents), permissions, ou chargement d'un binaire natif (`sqlite3`).
+
+5) Objectifs et prochaines étapes (priorisés)
+- 1. Faire démarrer le serveur localement :
+   - Tester depuis un chemin hors OneDrive (ex. `C:\projects\carnet`) ou suspendre la synchro OneDrive;
+   - Lancer Node en mode debug pour localiser l'origine (`node --trace-warnings server.js`);
+   - Vérifier les permissions et l'état du fichier `basededonnees.sqlite3`.
+- 2. Traiter les vulnérabilités :
+   - Faire un commit git avant toute mise à jour;
+   - Exécuter `npm audit fix` puis tester; pour les vulnérabilités restantes, envisager des mises à jour ciblées (p.ex. `sqlite3@5.0.2`) sur une branche séparée.
+- 3. Finaliser l'API et le frontend :
+   - Implémenter endpoints CRUD pour `nageurs` avec validation;
+   - Compléter la gestion des utilisateurs (auth, rôles) et protéger les routes admin;
+   - Connecter le frontend aux endpoints via fetch/AJAX.
+- 4. Tests & CI : ajouter tests unitaires (Jest/Mocha) et une CI légère (lint + tests).
+- 5. Documentation : créer `README.md` et `env.example`.
+
+6) Plan d'actions court terme (1–2 jours)
+- Reproduire l'erreur de `node server.js` depuis un chemin local et capturer la stack complète.
+- Faire un commit git de l'état actuel.
+- Exécuter `npm audit fix` et retester le démarrage; si besoin, faire des mises à jour ciblées sur une branche.
+
+7) Commandes utiles (PowerShell, exécuter depuis `...\\carnet\\backend`)
+```
+npm audit
+npm audit fix
+# si nécessaire (attention : breaking)
+npm audit fix --force
+
+# mise à jour ciblée (exemple)
+npm install sqlite3@5.0.2
+
+# démarrer le serveur en mode debug
+node --trace-warnings server.js
+```
+
+8) Recommandations
+- Faire un commit git avant d'utiliser `--force`.
+- Si OneDrive bloque, déplacer le projet hors du dossier OneDrive ou mettre en pause la synchronisation.
+- Tester les changements (notamment `sqlite3`) sur une branche séparée.
+
+Notes finales
+- Si tu veux, je peux :
+   - Copier le projet dans un chemin local et essayer de démarrer `server.js` pour isoler l'erreur;
+   - Lancer `npm audit fix` dans une branche et vérifier que le serveur démarre;
+   - Générer un `README.md` et un `env.example` pour faciliter l'installation.
+
+---
+
+Fonctionnalités / Menu (liste d'idées)
+- Menu principal
+   - Accéder aux groupes de natation
+   - Accéder aux groupes de sauvetage
+   - Statistiques et rapports
+   - Gestion de compte / Connexion
+   - Prochain cours à venir
+   - Changer de thème (Clair / Sombre)
+   - Changer la langue (Français / Anglais)
+   - Déconnexion / Verrouiller l'écran
+
+- Natation (sections)
+   - Liste des nageurs par groupe
+   - Ajouter / modifier / supprimer un nageur
+   - Voir horaire du groupe
+   - Marquer la présence
+   - Évaluer les compétences / attribuer un niveau
+   - Exporter groupe (PDF / CSV)
+   - Voir progression par élève / accès aux historiques
+   - Assignation de moniteur
+   - Filtrer par jour, heure, niveau
+
+- Sauvetage (sections)
+   - Liste des participants
+   - Inscription à un test (Bronze / Silver / Or)
+   - Télécharger formulaire de consentement
+   - Ajouter notes d'examen pratique / théorique
+   - Valider une réussite
+   - Voir calendrier des tests
+   - Gérer le matériel de sauvetage
+   - Suivi des présences / retards
+
+- Statistiques
+   - Progression des nageurs (graphiques)
+   - Taux d'assiduité par groupe
+   - Taux de réussite par niveau
+   - Historique de participation par session
+   - Statistiques par moniteur
+   - Export des stats (.csv, .pdf)
+
+- Compte utilisateur
+   - Changer mot de passe
+   - Créer compte moniteur / admin
+   - Voir journal de connexion
+   - Importer liste d'élèves
+   - Mode superviseur
+   - Paramètres personnalisés (notifications, couleurs, etc.)
+
+- Admin / Paramètres
+   - Définir rôles et permissions
+   - Sauvegarder / restaurer la base de données
+   - Exporter dossiers
+   - Envoyer message aux moniteurs
+   - Planifier automatiquement les horaires
+   - Activer / désactiver un groupe
+
+- Outils avancés
+   - Recherche avancée (nom, date, groupe, niveau)
+   - Afficher temps restant avant fin de session
+   - Gérer rappels et alertes (ex : 3 absences)
+   - Générer des certificats
+   - Ajouter photo au profil du nageur
+   - Mode plan de cours (checklist de compétences)
+
+Fin du fichier.
+
+-------------------------
+
+Détails techniques & diagnostic (instructions pas-à-pas)
+
+1) Reproduire et capturer l'erreur Node (contexte Windows)
+ - Depuis PowerShell, se placer dans `...\carnet\backend`.
+ - Lancer Node en mode trace pour obtenir un stack plus complet :
+    node --trace-warnings server.js
+ - Si l'erreur n'est pas assez explicite, démarrer avec inspecteur pour pouvoir placer un breakpoint et voir l'étape du require :
+    node --inspect-brk server.js
+ - Vérifier si l'erreur survient avant que `server.js` n'affiche ses logs (si oui, c'est au chargement des modules).
+
+2) Vérifications liées à OneDrive / fichiers verrouillés
+ - Pause rapide de la synchronisation OneDrive : clic droit sur l'icône OneDrive → "Pause la synchronisation" (15 min).
+ - Tester l'exécution depuis un chemin sans espaces/accents :
+    - Copier le dossier `carnet` temporairement vers `C:\projects\carnet` et lancer `node server.js` depuis là.
+ - Voir quels processus verrouillent des fichiers (Sysinternals): utiliser `Handle.exe` (optionnel) ou Resource Monitor → onglet "CPU" → Associated Handles.
+ - Vérifier les permissions du fichier DB et des fichiers du projet :
+    Get-Acl .\basededonnees.sqlite3 | Format-List
+
+3) Vérifications liées aux binaires natifs (sqlite3)
+ - Les erreurs `read` inconnues peuvent venir d'un binaire natif manquant/corrompu.
+ - Réparer les modules natifs :
+    - Supprimer `node_modules` et réinstaller proprement :
+       rm -r node_modules; npm ci
+    - Si `sqlite3` est problématique : `npm rebuild sqlite3`.
+    - Pour forcer une version : `npm install sqlite3@5.0.2` (tester sur branche).
+
+4) Logs et diagnostics supplémentaires
+ - Inspecter le fichier `package.json` pour versions problématiques.
+ - Lancer `node --trace-deprecation` ou `NODE_DEBUG=module node server.js` pour plus d'informations lors du chargement des modules.
+ - Si le problème persiste uniquement dans OneDrive, privilégier l'exécution hors OneDrive.
+
+Plan sécurisé pour corriger les vulnérabilités NPM
+
+1) Workflow recommandé (sécurisé)
+ - Faire un commit de l'état actuel :
+    git add . && git commit -m "snapshot before audit fixes"
+ - Créer une branche pour les fixes :
+    git checkout -b fix/npm-audit-YYYYMMDD
+ - Exécuter `npm audit fix` (non forcé) :
+    npm audit fix
+ - Exécuter la suite de tests (ou simplement démarrer le serveur et parcourir les pages principales) — valider le bon démarrage et tests manuels rapides.
+ - Si des vulnérabilités restent et que les fixes recommandent des mises à jour majeures, planifier les mises à jour manuelles et les tester séparément (p.ex. `sqlite3@5.0.2`).
+
+2) Actions spécifiques suggérées selon les vulnérabilités détectées
+ - `lodash` : mettre à jour vers la version corrigée (vérifier la compatibilité des packages qui l'utilisent).
+ - `qs` : mettre à jour vers >=6.14.1.
+ - `tar`, `cacache`, `make-fetch-happen`, `node-gyp` : ces paquets remontent souvent depuis des outils (npm, fetch libs, node-gyp) ; la stratégie :
+    - `npm update` et `npm audit fix`, puis parcourir la chaîne de dépendances pour identifier le paquet direct qui les exige et le mettre à jour.
+ - `sqlite3` : si le fix propose `5.0.2`, tester la mise à jour sur branche et rebuild des binaires.
+
+3) Validation après correctifs
+ - Démarrer le serveur, faire un smoke-test des endpoints principaux.
+ - Vérifier les logs et absence d'erreurs natives.
+ - Re-run `npm audit` pour confirmer l'état.
+
+Variables d'environnement recommandées (`env.example`)
+
+PORT=3000
+SESSION_SECRET=une_chaine_secrete_longue
+ADMIN_USER=admin
+ADMIN_PASSWORD=admin123
+NODE_ENV=development
+
+README rapide (squelette)
+
+# Carnet — README rapide
+
+Prérequis
+- Node.js (v16+ recommandé), npm
+
+Installation
+```
+cd backend
+npm ci
+cd ../frontend
+# les fichiers front sont statiques, pas d'installation nécessaire
+```
+
+Démarrer localement
+```
+cd backend
+node --trace-warnings server.js
+```
+
+Sécurité / vulnérabilités
+- Faire un commit avant d'appliquer `npm audit fix`.
+- Utiliser une branche dédiée pour les mises à jour.
+
+MVP et priorités (courte durée)
+- Priorité 1 (MVP):
+   - Faire démarrer le serveur et corriger l'erreur Node / verrouillage OneDrive.
+   - Endpoints CRUD basiques pour `nageurs` (GET/POST/PUT/DELETE).
+   - Authentification simple (session) et protection route admin.
+
+- Priorité 2:
+   - Liste complète de fonctionnalités (présences, évaluations, export CSV/PDF).
+   - Tests unitaires basiques et seed de données.
+
+- Priorité 3:
+   - Statistiques et exports, UI améliorée, CI.
+
+Checklist rapide pour la prochaine session
+- [ ] Copier le projet hors OneDrive et tester `node server.js`.
+- [ ] Commit + branche pour `npm audit fix`.
+- [ ] Rebuild / reinstall des modules natifs si besoin (`npm ci`, `npm rebuild`).
+- [ ] Tester `sqlite3` update sur branche si `npm audit fix` ne corrige pas.
+- [ ] Rédiger `env.example` et `README.md`.
+
+Si tu veux, je peux exécuter certaines de ces actions maintenant :
+- Copier le projet temporairement vers `C:\projects\carnet` et tenter de démarrer `server.js` pour isoler l'erreur (je garderai le dépôt original intact).
+- Créer une branche `fix/npm-audit-YYYYMMDD`, exécuter `npm audit fix`, puis te donner le diff et les résultats.
+
+Dis-moi quelle action tu veux que je lance en premier et je m'en occupe.
+

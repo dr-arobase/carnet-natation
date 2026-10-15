@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cours de Sauvetage</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="menu" id="menu">
+    <h2>🛟 Menu Sauvetage</h2>
+    <ul>
+      <li><a href="#participants" onclick="toggleParticipants(); return false;">📋 Voir liste des participants</a></li>
+      <li><a href="#inscription" onclick="toggleInscription(); return false;">🔥 Inscription à un test</a></li>
+      <li><a href="#formulaires" onclick="toggleFormulaires(); return false;">📄 Télécharger formulaires</a></li>
+      <li><a href="#examens" onclick="toggleExamens(); return false;">📝 Notes d'examens</a></li>
+      <li><a href="#validation" onclick="toggleValidation(); return false;">🎓 Valider une réussite</a></li>
+      <li><a href="#calendrier" onclick="toggleCalendrier(); return false;">📅 Calendrier des tests</a></li>
+      <li><a href="#materiel" onclick="toggleMateriel(); return false;">📦 Gérer le matériel</a></li>
+      <li><a href="#presencesSauvetage" onclick="togglePresencesSauvetage(); return false;">🕵️ Suivi des présences</a></li>
+      <li><a href="#" onclick="localStorage.removeItem('token'); window.location.href='login.html'; return false;">🚪 Déconnexion</a></li>
+      <li><a href="index.html">🏠 Accueil</a></li>
+    </ul>
+  </nav>
+
+  <main class="section">
+    <div class="container">
+      <h1 class="title">🛟 Cours de Sauvetage Aquatique</h1>
+      <p class="subtitle">Bienvenue dans la section dédiée aux cours de sauvetage aquatique et certifications.</p>
+
+      <div class="columns is-multiline">
+        <div class="column is-one-third">
+          <div class="card">
+            <div class="card-content">
+              <p class="title is-5">🥉 Bronze</p>
+              <p>Introduction aux techniques de sauvetage</p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-one-third">
+          <div class="card">
+            <div class="card-content">
+              <p class="title is-5">🥈 Argent</p>
+              <p>Techniques avancées et premiers secours</p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-one-third">
+          <div class="card">
+            <div class="card-content">
+              <p class="title is-5">🥇 Or</p>
+              <p>Certification complète de sauveteur</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- contenu simplifié pour la page de test -->
+    <section id="participants" class="hidden">
+      <h2>📋 Liste des participants</h2>
+      <table id="tableParticipants" border="1" cellpadding="5">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Niveau visé</th>
+            <th>Date inscription</th>
+            <th>Statut</th>
+            <th>Prochaine session</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alice Johnson</td>
+            <td>Bronze</td>
+            <td>15/10/2024</td>
+            <td>En formation</td>
+            <td>25/11/2024</td>
+          </tr>
+          <tr>
+            <td>Bob Wilson</td>
+            <td>Argent</td>
+            <td>01/11/2024</td>
+            <td>Test à venir</td>
+            <td>30/11/2024</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="inscription" class="hidden">
+      <h2>🔥 Inscription aux tests de sauvetage</h2>
+      <form>
+        <label for="nomInscription">Nom complet :</label>
+        <input type="text" id="nomInscription" required>
+
+        <label for="emailInscription">Email :</label>
+        <input type="email" id="emailInscription" required>
+
+        <label for="niveauTest">Niveau de test :</label>
+        <select id="niveauTest" required>
+          <option value="">-- Choisir un niveau --</option>
+          <option value="bronze">🥉 Bronze</option>
+          <option value="silver">🥈 Argent</option>
+          <option value="or">🥇 Or</option>
+        </select>
+
+        <label for="dateTest">Date de test souhaitée :</label>
+        <input type="date" id="dateTest" required>
+
+        <label for="experience">Expérience de natation :</label>
+        <select id="experience">
+          <option value="debutant">Débutant</option>
+          <option value="intermediaire">Intermédiaire</option>
+          <option value="avance">Avancé</option>
+          <option value="expert">Expert</option>
+        </select>
+
+        <button type="submit">S'inscrire au test</button>
+      </form>
+    </section>
+
+  </main>
+  <script src="../js/nageurs.js"></script>
+</body>
+</html>

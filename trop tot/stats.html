@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Statistiques et Rapports</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <nav class="menu" id="menu">
+        <h2>📊 Menu Statistiques</h2>
+        <ul>
+            <li><a href="#progression" onclick="toggleProgressionStats(); return false;">📈 Progression des nageurs</a></li>
+            <li><a href="#assiduite" onclick="toggleAssiduite(); return false;">📉 Taux d'assiduité par groupe</a></li>
+            <li><a href="#reussite" onclick="toggleReussite(); return false;">🧮 Taux de réussite par niveau</a></li>
+            <li><a href="#historique" onclick="toggleHistoriqueStats(); return false;">🗓️ Historique de participation</a></li>
+            <li><a href="#moniteur" onclick="toggleStatsMoniteur(); return false;">👥 Statistiques par moniteur</a></li>
+            <li><a href="#export" onclick="toggleExportStats(); return false;">📂 Exportation des stats</a></li>
+            <li><a href="index.html">🏠 Accueil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>📊 Statistiques et Rapports</h1>
+        <p>Tableau de bord complet pour analyser les performances et la progression.</p>
+        
+        <div class="stats-overview">
+            <div class="stat-card">
+                <h3>👥 Total Participants</h3>
+                <div class="stat-number">247</div>
+                <div class="stat-trend">+12 ce mois</div>
+            </div>
+            <div class="stat-card">
+                <h3>📈 Taux de réussite</h3>
+                <div class="stat-number">87%</div>
+                <div class="stat-trend">+3% vs mois dernier</div>
+            </div>
+            <div class="stat-card">
+                <h3>🕐 Taux d'assiduité</h3>
+                <div class="stat-number">92%</div>
+                <div class="stat-trend">-1% vs mois dernier</div>
+            </div>
+            <div class="stat-card">
+                <h3>🎓 Diplômes attribués</h3>
+                <div class="stat-number">34</div>
+                <div class="stat-trend">+8 ce mois</div>
+            </div>
+        </div>
+
+        <!-- contenu stats... (inchangé) -->
+    </main>
+    <script src="assets/js/nageurs.js"></script>
+</body>
+</html>

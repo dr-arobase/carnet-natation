@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Administration</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="menu" id="menu">
+        <h2>⚙️ Menu Admin</h2>
+        <ul>
+            <li><a href="#permissions" onclick="togglePermissions(); return false;">🔐 Définir rôles et permissions</a></li>
+            <li><a href="#baseDonnees" onclick="toggleBaseDonnees(); return false;">📂 Sauvegarder/Restaurer BD</a></li>
+            <li><a href="#exportTotal" onclick="toggleExportTotal(); return false;">📤 Exporter tous les dossiers</a></li>
+            <li><a href="#coursTest" onclick="toggleCoursTest(); return false;">🧪 Ajouter cours test temporaire</a></li>
+            <li><a href="#messageMoniteurs" onclick="toggleMessageMoniteurs(); return false;">📬 Message aux moniteurs</a></li>
+            <li><a href="#planificationAuto" onclick="togglePlanificationAuto(); return false;">⏱️ Planification automatique</a></li>
+            <li><a href="#gestionGroupes" onclick="toggleGestionGroupes(); return false;">🚦 Activer/désactiver groupes</a></li>
+            <li><a href="index.html">🏠 Accueil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>⚙️ Administration Système</h1>
+        <p>Panneau d'administration pour la gestion complète du système.</p>
+        
+        <div class="admin-overview">
+            <div class="admin-stat">
+                <h3>👥 Utilisateurs actifs</h3>
+                <div class="stat-number">23</div>
+            </div>
+            <div class="admin-stat">
+                <h3>🏊 Groupes actifs</h3>
+                <div class="stat-number">47</div>
+            </div>
+            <div class="admin-stat">
+                <h3>💾 Dernière sauvegarde</h3>
+                <div class="stat-time">Il y a 2h</div>
+            </div>
+            <div class="admin-stat">
+                <h3>🔄 Système</h3>
+                <div class="stat-status">✅ Opérationnel</div>
+            </div>
+        </div>
+
+        <section id="permissions" class="hidden">
+            <h2>🔐 Gestion des rôles et permissions</h2>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <h3>👤 Moniteur</h3>
+                    <div class="permissions-list">
+                        <label><input type="checkbox" checked disabled> Voir ses groupes</label>
+                        <label><input type="checkbox" checked disabled> Marquer présences</label>
+                        <label><input type="checkbox" checked disabled> Évaluer nageurs</label>
+                        <label><input type="checkbox"> Modifier informations nageurs</label>
+                        <label><input type="checkbox"> Accès statistiques de base</label>
+                    </div>
+                </div>
+                
+                <div class="role-card">
+                    <h3>👨‍🏫 Moniteur Senior</h3>
+                    <div class="permissions-list">
+                        <label><input type="checkbox" checked disabled> Toutes permissions Moniteur</label>
+                        <label><input type="checkbox" checked> Voir tous les groupes</label>
+                        <label><input type="checkbox" checked> Attribuer niveaux</label>
+                        <label><input type="checkbox" checked> Export données</label>
+                        <label><input type="checkbox"> Gérer horaires</label>
+                    </div>
+                </div>
+                
+                <div class="role-card">
+                    <h3>🔧 Coordinateur</h3>
+                    <div class="permissions-list">
+                        <label><input type="checkbox" checked disabled> Toutes permissions Senior</label>
+                        <label><input type="checkbox" checked> Créer/modifier groupes</label>
+                        <label><input type="checkbox" checked> Assigner moniteurs</label>
+                        <label><input type="checkbox" checked> Accès statistiques avancées</label>
+                        <label><input type="checkbox" checked> Gérer matériel</label>
+                    </div>
+                </div>
+                
+                <div class="role-card">
+                    <h3>⚙️ Administrateur</h3>
+                    <div class="permissions-list">
+                        <label><input type="checkbox" checked disabled> Accès complet système</label>
+                        <label><input type="checkbox" checked disabled> Gestion utilisateurs</label>
+                        <label><input type="checkbox" checked disabled> Sauvegarde/restauration</label>
+                        <label><input type="checkbox" checked disabled> Configuration système</label>
+                    </div>
+                </div>
+            </div>
+            <button onclick="sauvegarderPermissions()" class="btn-primary">Sauvegarder les permissions</button>
+        </section>
+
+        <section id="baseDonnees" class="hidden">
+            <h2>📂 Gestion de la base de données</h2>
+            <div class="database-management">
+                <div class="backup-section">
+                    <h3>💾 Sauvegarde</h3>
+                    <div class="backup-info">
+                        <p><strong>Dernière sauvegarde :</strong> 31/10/2024 12:00</p>
+                        <p><strong>Taille :</strong> 45.3 MB</p>
+                        <p><strong>Statut :</strong> ✅ Réussie</p>
+                    </div>
+                    <div class="backup-options">
+                        <label>
+                            <input type="radio" name="backupType" value="complete" checked> 
+                            Sauvegarde complète (tous les données)
+                        </label>
+                        <label>
+                            <input type="radio" name="backupType" value="incremental"> 
+                            Sauvegarde incrémentale (changements uniquement)
+                        </label>
+                    </div>
+                    <button onclick="lancerSauvegarde()" class="btn-primary">🔄 Lancer sauvegarde maintenant</button>
+                </div>
+                
+                <div class="restore-section">
+                    <h3>📥 Restauration</h3>
+                    <div class="restore-warning">
+                        <p>⚠️ <strong>Attention :</strong> La restauration remplacera toutes les données actuelles.</p>
+                    </div>
+                    <div class="backup-files">
+                        <h4>Fichiers de sauvegarde disponibles :</h4>
+                        <div class="backup-file">
+                            <span>backup_2024-10-31_12-00.sql</span>
+                            <span class="file-size">45.3 MB</span>
+                            <button onclick="restaurerSauvegarde('2024-10-31_12-00')" class="btn-secondary">Restaurer</button>
+                        </div>
+                        <div class="backup-file">
+                            <span>backup_2024-10-30_12-00.sql</span>
+                            <span class="file-size">44.8 MB</span>
+                            <button onclick="restaurerSauvegarde('2024-10-30_12-00')" class="btn-secondary">Restaurer</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="auto-backup-section">
+                    <h3>⏰ Sauvegarde automatique</h3>
+                    <form class="auto-backup-form">
+                        <label>
+                            <input type="checkbox" checked> Activer la sauvegarde automatique
+                        </label>
+                        
+                        <label for="backupFrequency">Fréquence :</label>
+                        <select id="backupFrequency">
+                            <option value="daily" selected>Quotidienne</option>
+                            <option value="weekly">Hebdomadaire</option>
+                            <option value="monthly">Mensuelle</option>
+                        </select>
+                        
+                        <label for="backupTime">Heure :</label>
+                        <input type="time" id="backupTime" value="02:00">
+                        
+                        <label for="retentionDays">Conserver pendant (jours) :</label>
+                        <input type="number" id="retentionDays" value="30" min="7" max="365">
+                        
+                        <button type="submit">Sauvegarder la configuration</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="exportTotal" class="hidden">
+            <h2>📤 Export complet des données</h2>
+            <div class="export-complete">
+                <h3>Exporter tous les dossiers</h3>
+                <div class="export-options-grid">
+                    <div class="export-category">
+                        <h4>👥 Données des participants</h4>
+                        <label><input type="checkbox" checked> Nageurs</label>
+                        <label><input type="checkbox" checked> Participants sauvetage</label>
+                        <label><input type="checkbox" checked> Historique des niveaux</label>
+                    </div>
+                    
+                    <div class="export-category">
+                        <h4>📊 Données de performance</h4>
+                        <label><input type="checkbox" checked> Évaluations</label>
+                        <label><input type="checkbox" checked> Présences</label>
+                        <label><input type="checkbox" checked> Statistiques</label>
+                    </div>
+                    
+                    <div class="export-category">
+                        <h4>🏊 Organisation</h4>
+                        <label><input type="checkbox" checked> Groupes et horaires</label>
+                        <label><input type="checkbox" checked> Assignations moniteurs</label>
+                        <label><input type="checkbox"> Configuration système</label>
+                    </div>
+                </div>
+                
+                <div class="export-format">
+                    <h4>Format d'export :</h4>
+                    <label><input type="radio" name="exportFormat" value="csv" checked> CSV (Excel compatible)</label>
+                    <label><input type="radio" name="exportFormat" value="json"> JSON (sauvegarde complète)</label>
+                    <label><input type="radio" name="exportFormat" value="pdf"> PDF (rapport imprimable)</label>
+                </div>
+                
+                <button onclick="lancerExportComplet()" class="btn-primary">🚀 Lancer l'export complet</button>
+                
+                <div class="export-progress hidden" id="exportProgress">
+                    <h4>Export en cours...</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p class="progress-text">Préparation...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="coursTest" class="hidden">
+            <h2>🧪 Cours test temporaire</h2>
+            <div class="test-course">
+                <h3>Créer un cours temporaire pour les tests</h3>
+                <form class="test-course-form">
+                    <label for="nomCoursTest">Nom du cours :</label>
+                    <input type="text" id="nomCoursTest" placeholder="ex: Test Nageur 3 - Novembre">
+                    
+                    <label for="typeCoursTest">Type :</label>
+                    <select id="typeCoursTest">
+                        <option value="natation">Natation</option>
+                        <option value="sauvetage">Sauvetage</option>
+                        <option value="evaluation">Évaluation</option>
+                    </select>
+                    
+                    <label for="dateDebutTest">Date de début :</label>
+                    <input type="date" id="dateDebutTest">
+                    
+                    <label for="dateFinTest">Date de fin :</label>
+                    <input type="date" id="dateFinTest">
+                    
+                    <label for="moniteurTest">Moniteur assigné :</label>
+                    <select id="moniteurTest">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="marie">Marie Dubois</option>
+                        <option value="pierre">Pierre Leblanc</option>
+                        <option value="sophie">Sophie Martin</option>
+                    </select>
+                    
+                    <label for="participantsMax">Nombre max de participants :</label>
+                    <input type="number" id="participantsMax" min="1" max="20" value="8">
+                    
+                    <label for="notesTest">Notes/Objectifs :</label>
+                    <textarea id="notesTest" rows="3" placeholder="Objectifs du cours test, critères d'évaluation..."></textarea>
+                    
+                    <button type="submit">Créer le cours test</button>
+                </form>
+                
+                <div class="existing-test-courses">
+                    <h3>Cours tests actifs</h3>
+                    <div class="test-course-item">
+                        <div class="course-info">
+                            <strong>Test Évaluation Préscolaire 3</strong>
+                            <p>Du 15/11/2024 au 22/11/2024 - Marie Dubois</p>
+                            <p>Participants: 6/8</p>
+                        </div>
+                        <div class="course-actions">
+                            <button onclick="voirCoursTest('pres3')" class="btn-secondary">Voir</button>
+                            <button onclick="supprimerCoursTest('pres3')" class="btn-danger">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="messageMoniteurs" class="hidden">
+            <h2>📬 Messages aux moniteurs</h2>
+            <div class="messaging-system">
+                <form class="message-form">
+                    <h3>Envoyer un message</h3>
+                    
+                    <label for="destinataires">Destinataires :</label>
+                    <div class="recipient-options">
+                        <label><input type="radio" name="recipients" value="all" checked> Tous les moniteurs</label>
+                        <label><input type="radio" name="recipients" value="senior"> Moniteurs seniors uniquement</label>
+                        <label><input type="radio" name="recipients" value="specific"> Sélection personnalisée</label>
+                    </div>
+                    
+                    <div id="specificRecipients" class="hidden">
+                        <div class="checkbox-group">
+                            <label><input type="checkbox"> Marie Dubois</label>
+                            <label><input type="checkbox"> Pierre Leblanc</label>
+                            <label><input type="checkbox"> Sophie Martin</label>
+                            <label><input type="checkbox"> Jean Tremblay</label>
+                        </div>
+                    </div>
+                    
+                    <label for="prioriteMessage">Priorité :</label>
+                    <select id="prioriteMessage">
+                        <option value="normal">Normale</option>
+                        <option value="high">Élevée</option>
+                        <option value="urgent">Urgente</option>
+                    </select>
+                    
+                    <label for="sujetMessage">Sujet :</label>
+                    <input type="text" id="sujetMessage" required>
+                    
+                    <label for="contenuMessage">Message :</label>
+                    <textarea id="contenuMessage" rows="6" required></textarea>
+                    
+                    <div class="message-options">
+                        <label><input type="checkbox"> Demander accusé de réception</label>
+                        <label><input type="checkbox"> Envoyer par email également</label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">📤 Envoyer le message</button>
+                </form>
+                
+                <div class="message-history">
+                    <h3>Messages récents envoyés</h3>
+                    <div class="message-item">
+                        <div class="message-header">
+                            <strong>Changement d'horaire piscine A</strong>
+                            <span class="message-date">30/10/2024</span>
+                        </div>
+                        <p class="message-preview">Modification des créneaux de la piscine A pour la semaine du 4 novembre...</p>
+                        <div class="message-status">✅ Lu par 8/8 moniteurs</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="planificationAuto" class="hidden">
+            <h2>⏱️ Planification automatique des horaires</h2>
+            <div class="auto-scheduling">
+                <h3>Configuration de la planification</h3>
+                <form class="scheduling-form">
+                    <div class="scheduling-section">
+                        <h4>Contraintes de planification</h4>
+                        
+                        <label for="heureDebut">Heure de début :</label>
+                        <input type="time" id="heureDebut" value="09:00">
+                        
+                        <label for="heureFin">Heure de fin :</label>
+                        <input type="time" id="heureFin" value="18:00">
+                        
+                        <label for="dureeSession">Durée des sessions (minutes) :</label>
+                        <input type="number" id="dureeSession" value="60" min="30" max="120">
+                        
+                        <label for="pauseEntreSessions">Pause entre sessions (minutes) :</label>
+                        <input type="number" id="pauseEntreSessions" value="15" min="0" max="30">
+                    </div>
+                    
+                    <div class="scheduling-section">
+                        <h4>Jours d'ouverture</h4>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" checked> Lundi</label>
+                            <label><input type="checkbox" checked> Mardi</label>
+                            <label><input type="checkbox" checked> Mercredi</label>
+                            <label><input type="checkbox" checked> Jeudi</label>
+                            <label><input type="checkbox" checked> Vendredi</label>
+                            <label><input type="checkbox"> Samedi</label>
+                            <label><input type="checkbox"> Dimanche</label>
+                        </div>
+                    </div>
+                    
+                    <div class="scheduling-section">
+                        <h4>Priorités de planification</h4>
+                        <div class="priority-list">
+                            <div class="priority-item">
+                                <span>1. Groupes préscolaires (matinée préférée)</span>
+                            </div>
+                            <div class="priority-item">
+                                <span>2. Cours adultes (fin de journée)</span>
+                            </div>
+                            <div class="priority-item">
+                                <span>3. Optimiser l'utilisation des moniteurs</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">🔄 Générer la planification</button>
+                </form>
+                
+                <div class="scheduling-preview hidden" id="schedulingPreview">
+                    <h3>Aperçu de la planification générée</h3>
+                    <div class="schedule-grid">
+                        <!-- Contenu généré dynamiquement -->
+                    </div>
+                    <div class="scheduling-actions">
+                        <button onclick="approuverPlanification()" class="btn-success">✅ Approuver</button>
+                        <button onclick="regenererPlanification()" class="btn-secondary">🔄 Régénérer</button>
+                        <button onclick="annulerPlanification()" class="btn-danger">❌ Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gestionGroupes" class="hidden">
+            <h2>🚦 Gestion d'état des groupes</h2>
+            <div class="groups-management">
+                <h3>Groupes de natation</h3>
+                <div class="groups-grid">
+                    <div class="group-card active">
+                        <div class="group-header">
+                            <h4>Préscolaire 1 - Lundi 14h</h4>
+                            <div class="group-status active">🟢 Actif</div>
+                        </div>
+                        <div class="group-info">
+                            <p>Participants: 12/15</p>
+                            <p>Moniteur: Marie Dubois</p>
+                        </div>
+                        <div class="group-actions">
+                            <button onclick="toggleGroupe('pres1')" class="btn-warning">⏸️ Suspendre</button>
+                            <button onclick="voirGroupe('pres1')" class="btn-secondary">👁️ Voir</button>
+                        </div>
+                    </div>
+                    
+                    <div class="group-card inactive">
+                        <div class="group-header">
+                            <h4>Nageur 4 - Mercredi 17h</h4>
+                            <div class="group-status inactive">🔴 Suspendu</div>
+                        </div>
+                        <div class="group-info">
+                            <p>Participants: 8/12</p>
+                            <p>Moniteur: Pierre Leblanc</p>
+                            <p class="suspension-reason">Raison: Maintenance piscine</p>
+                        </div>
+                        <div class="group-actions">
+                            <button onclick="toggleGroupe('nag4')" class="btn-success">▶️ Réactiver</button>
+                            <button onclick="voirGroupe('nag4')" class="btn-secondary">👁️ Voir</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Groupes de sauvetage</h3>
+                <div class="groups-grid">
+                    <div class="group-card active">
+                        <div class="group-header">
+                            <h4>Formation Bronze</h4>
+                            <div class="group-status active">🟢 Actif</div>
+                        </div>
+                        <div class="group-info">
+                            <p>Participants: 6/8</p>
+                            <p>Prochaine session: 25/11/2024</p>
+                        </div>
+                        <div class="group-actions">
+                            <button onclick="toggleGroupe('bronze')" class="btn-warning">⏸️ Suspendre</button>
+                            <button onclick="voirGroupe('bronze')" class="btn-secondary">👁️ Voir</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bulk-actions">
+                    <h3>Actions groupées</h3>
+                    <button onclick="suspendreTousGroupes()" class="btn-warning">⏸️ Suspendre tous les groupes</button>
+                    <button onclick="reactiverTousGroupes()" class="btn-success">▶️ Réactiver tous les groupes</button>
+                    <button onclick="exporterEtatGroupes()" class="btn-secondary">📤 Exporter l'état des groupes</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="nageurs.js"></script>
+</body>
+</html>

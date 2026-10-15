@@ -1,0 +1,11 @@
+{
+  "watch": ["server.js", "api", "db.js", "app.js"],
+  "ext": "js,json",
+  "ignore": [
+    "../frontend/*",
+    "../plan.txt",
+    "node_modules/*",
+    "**/*.sqlite3",
+    "**/*.log"
+  ]
+}

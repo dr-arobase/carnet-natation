@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BES Loan Lite - Client</title>
+    <link rel="icon" type="image/png" href="https://bulma.io/images/bulma-logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+        <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+
+            <div id="menu" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="index.html">Dashboard</a>
+                    <a class="navbar-item" href="loans.html">Prêts</a>
+                    <a class="navbar-item" href="paiements.html">Paiements</a>
+                    <a class="navbar-item" href="client.html" aria-current="page">Client</a>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-light" href="login.html">Déconnexion</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+    <section class="section">
+        <div class="container"> 
+
+            <h1 class="title">Gestion des clients</h1>
+            <h2 class="subtitle">Ajouter un nouveau client</h2>
+
+            <div class="box">
+                <form id="client-form">
+                    <input type="hidden" id="client-id">
+
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="nom">Nom :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="nom" name="nom" placeholder="Ex : Tremblay">
+                                    <span class="icon is-left"><i class="fas fa-user"></i></span>
+                                </div>
+                                <div class="help is-danger" id="nom-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="prenom">Prénom :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="prenom" name="prenom" placeholder="Ex : Samuel">
+                                    <span class="icon is-left"><i class="fas fa-user"></i></span>
+                                </div>
+                                <div class="help is-danger" id="prenom-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="telephone">Téléphone :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" id="telephone" name="telephone" placeholder="Ex : 5141234567 (10 chiffres)">
+                                    <span class="icon is-left"><i class="fas fa-phone"></i></span>
+                                </div>
+                                <div class="help is-danger" id="telephone-error" style="display:none;"></div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="field">
+                                <label class="label" for="email">Email :</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="email" id="email" name="email" placeholder="Ex : samuel@mail.com">
+                                    <span class="icon is-left"><i class="fas fa-envelope"></i></span>
+                                </div>
+                                <div class="help is-danger" id="email-error" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="adresse">Adresse :</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" id="adresse" name="adresse" placeholder="Ex : 123 Rue des Pins, Montréal">
+                            <span class="icon is-left"><i class="fas fa-map-marker-alt"></i></span>
+                        </div>
+                        <div class="help is-danger" id="adresse-error" style="display:none;"></div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary" type="submit" id="submit-btn">
+                                Ajouter le client
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-danger" type="button" id="cancel-edit">
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="notification is-success" id="success-message" style="display: none;">
+                    Client ajouté avec succès !
+                </div>
+                <div class="notification is-danger" id="error-message" style="display: none;">
+                    Une erreur est survenue. Veuillez réessayer.
+                </div>
+            </div>
+
+            <br>
+
+            <h2 class="subtitle">Liste des clients déjà enregistrés</h2>
+
+            <div class="box">
+                <div class="field has-addons">
+                    <div class="control is-expanded has-icons-left">
+                        <input id="search-client" class="input" type="text" placeholder="Rechercher par nom, prénom, email ou téléphone...">
+                        <span class="icon is-left"><i class="fas fa-search"></i></span>
+                    </div>
+                    <div class="control">
+                        <button class="button is-danger" id="clear-search">Effacer</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <table class="table is-fullwidth is-striped" id="clients-table">
+                    <thead>
+                        <tr>
+                            <th class="sort-link" data-column="nom">
+                                Nom complet <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="telephone">
+                                Téléphone <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="email">
+                                Email <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="adresse">
+                                Adresse <span class="sort-icon"></span>
+                            </th>
+                            <th class="sort-link" data-column="loan_count">
+                                Prêts <span class="sort-icon"></span>
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <nav class="pagination is-centered">
+                  <div id="client-pagination" class="buttons is-centered"></div>
+                </nav>
+            </div>
+
+        </div>
+    </section>
+        <script src="../js/client.js"></script>
+</body>
+</html>

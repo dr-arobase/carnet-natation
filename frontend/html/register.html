@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carnet de Natation — Inscription</title>
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-5-tablet is-4-desktop">
+        <div class="box">
+          <h2 class="title is-4 has-text-centered">gestion de cours</h2>
+          <h3 class="subtitle is-6 has-text-centered">Inscription</h3>
+
+          <form id="inscription-Form">
+            <input type="hidden" id="uId">
+            <div class="field">
+              <label class="label" for="username">Nom d'utilisateur</label>
+              <div class="control has-icons-left">
+                <input class="input" type="text" id="username" name="username" placeholder="Nom d'utilisateur">
+                <span class="icon is-left"><i class="fas fa-user"></i></span>
+              </div>
+              <div class="help is-danger" id="username-error" style="display:none;"></div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="password">Mot de passe</label>
+              <div class="control has-icons-left">
+                <input class="input" type="password" id="password" name="password" placeholder="Mot de passe">
+                <span class="icon is-left"><i class="fas fa-lock"></i></span>
+              </div>
+              <div class="help is-danger" id="password-error" style="display:none;"></div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button class="button is-primary is-fullwidth" id="submitBtn" type="submit">S'inscrire</button>
+              </div>
+            </div>
+
+            <p class="has-text-centered">Déjà un compte ? <a href="login.html">Connectez-vous</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/js/register.js"></script>
+</body>
+</html>

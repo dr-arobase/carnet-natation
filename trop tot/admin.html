@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Administration</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <nav class="menu" id="menu">
+        <h2>⚙️ Menu Admin</h2>
+        <ul>
+            <li><a href="#permissions" onclick="togglePermissions(); return false;">🔐 Définir rôles et permissions</a></li>
+            <li><a href="#baseDonnees" onclick="toggleBaseDonnees(); return false;">📂 Sauvegarder/Restaurer BD</a></li>
+            <li><a href="#exportTotal" onclick="toggleExportTotal(); return false;">📤 Exporter tous les dossiers</a></li>
+            <li><a href="#coursTest" onclick="toggleCoursTest(); return false;">🧪 Ajouter cours test temporaire</a></li>
+            <li><a href="#messageMoniteurs" onclick="toggleMessageMoniteurs(); return false;">📬 Message aux moniteurs</a></li>
+            <li><a href="#planificationAuto" onclick="togglePlanificationAuto(); return false;">⏱️ Planification automatique</a></li>
+            <li><a href="#gestionGroupes" onclick="toggleGestionGroupes(); return false;">🚦 Activer/désactiver groupes</a></li>
+            <li><a href="index.html">🏠 Accueil</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>⚙️ Administration Système</h1>
+        <p>Panneau d'administration pour la gestion complète du système.</p>
+        
+        <div class="admin-overview">
+            <div class="admin-stat">
+                <h3>👥 Utilisateurs actifs</h3>
+                <div class="stat-number">23</div>
+            </div>
+            <div class="admin-stat">
+                <h3>🏊 Groupes actifs</h3>
+                <div class="stat-number">47</div>
+            </div>
+            <div class="admin-stat">
+                <h3>💾 Dernière sauvegarde</h3>
+                <div class="stat-time">Il y a 2h</div>
+            </div>
+            <div class="admin-stat">
+                <h3>🔄 Système</h3>
+                <div class="stat-status">✅ Opérationnel</div>
+            </div>
+        </div>
+
+        <!-- contenu administrateur... (inchangé) -->
+    </main>
+    <script src="assets/js/nageurs.js"></script>
+</body>
+</html>
